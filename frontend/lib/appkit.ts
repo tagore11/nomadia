@@ -31,11 +31,11 @@ export const appKitModal = createAppKit({
   themeVariables: { "--w3m-accent": "#3ce089" },
   features: {
     email: true,
-    // Google/Apple are hidden until Social Login is enabled for this project in
-    // the Reown dashboard (cloud.reown.com) — with it off, the buttons render
-    // but loop on an OAuth error. Restore `socials: ["google", "apple"]` once
-    // the dashboard side is configured; email + wallets work regardless.
-    socials: false,
+    // Google + Apple only (X/Discord aren't useful for a money app). Matching
+    // Reown dashboard config (Aug 11, 2026): Social & Email ON with these
+    // providers, and nomadia-app.vercel.app on the domain allowlist — without
+    // the allowlist entry the OAuth flow loops on an error.
+    socials: ["google", "apple"],
     emailShowWallets: true,
   },
 });
