@@ -7,14 +7,14 @@
   },
   "auth": {
     "signInTitle": "Nomadia'ya giriş yap",
-    "signInBody": "Teklif açmak ve işlem yapmak için giriş yap. Cüzdan, Google/Apple veya Telegram kullanabilirsin.",
+    "signInBody": "Küçük teklifleri giriş yapmadan verebilirsin. Teklif kabul etmek ve daha büyük tutarlar için giriş yap.",
     "signInToPost": "Teklif açmak için giriş yap.",
     "signInToAct": "Devam etmek için giriş yap.",
     "signInWithWallet": "Bu cüzdanla giriş yap",
     "signing": "İmzalanıyor...",
     "signFailed": "Giriş yapılamadı. Tekrar dene.",
     "or": "veya",
-    "tierNote": "Cüzdan, Google veya Apple ile $100'a kadar işlem yapabilirsin. Telegram (telefon doğrulamalı) daha yüksek limit açar.",
+    "tierNote": "Giriş yapmadan $100'a kadar teklif verebilirsin (iletişim kanalı zorunlu). Cüzdan, Google veya Apple: $500'a kadar. Telegram (telefon doğrulamalı): $1500'a kadar.",
     "signOut": "Çıkış yap"
   },
   "direction": {
@@ -64,7 +64,9 @@
     "submitting": "Gönderiliyor...",
     "contact": "Eşleştiğin kişi sana nasıl ulaşsın? (opsiyonel)",
     "contactPlaceholder": "@telegram, WhatsApp, Signal...",
-    "contactHint": "Yalnız eşleştiğin kişiye gösterilir, buluşma yerini kararlaştırmak için."
+    "contactHint": "Yalnız eşleştiğin kişiye gösterilir, buluşma yerini kararlaştırmak için.",
+    "contactRequired": "Eşleştiğin kişi sana nasıl ulaşsın? (zorunlu)",
+    "anonNote": "Giriş yapmadan teklif veriyorsun: teklif başına en fazla ${maxUsd} ve eşleşmenin sana ulaşabilmesi için iletişim kanalı zorunlu. Limitini yükseltmek için giriş yap."
   },
   "offerDetail": {
     "loading": "Yükleniyor...",
@@ -134,7 +136,8 @@
     "COUNTERPARTY_NOT_FOUND": "Karşı taraf bulunamadı",
     "ALREADY_RATED": "Bu işlemi zaten puanladınız",
     "UNKNOWN_ERROR": "Bir şeyler ters gitti",
-    "TRADE_LIMIT_EXCEEDED": "Bu işlem ${maxUsd} limitinin üstünde. Daha büyük işlemler için Telegram ile giriş yap."
+    "TRADE_LIMIT_EXCEEDED": "Bu işlem ${maxUsd} limitinin üstünde. Daha büyük işlemler için giriş yap (cüzdan $500'a, Telegram $1500'a kadar).",
+    "CONTACT_REQUIRED": "Eşleşmenin sana ulaşabilmesi için bir iletişim kanalı ekle (Telegram, WhatsApp...)."
   },
   "fairness": {
     "fair": "Adil kur",

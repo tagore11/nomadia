@@ -7,14 +7,14 @@
   },
   "auth": {
     "signInTitle": "Sign in to Nomadia",
-    "signInBody": "Sign in to post offers and trade. Use a wallet, Google or Apple, or Telegram.",
+    "signInBody": "You can post small offers without signing in. Sign in to accept offers and trade larger amounts.",
     "signInToPost": "Sign in to post an offer.",
     "signInToAct": "Sign in to continue.",
     "signInWithWallet": "Sign in with this wallet",
     "signing": "Signing...",
     "signFailed": "Couldn't sign in. Please try again.",
     "or": "or",
-    "tierNote": "Wallet, Google or Apple lets you trade up to $100. Telegram (phone-verified) unlocks higher limits.",
+    "tierNote": "Post offers up to $100 without signing in (contact required). Wallet, Google or Apple: up to $500. Telegram (phone-verified): up to $1500.",
     "signOut": "Sign out"
   },
   "direction": {
@@ -64,7 +64,9 @@
     "submitting": "Posting...",
     "contact": "How can your match reach you? (optional)",
     "contactPlaceholder": "@telegram, WhatsApp, Signal...",
-    "contactHint": "Shown only to the person you match with, so you can agree where to meet."
+    "contactHint": "Shown only to the person you match with, so you can agree where to meet.",
+    "contactRequired": "How can your match reach you? (required)",
+    "anonNote": "You're posting without signing in: up to ${maxUsd} per offer, and a contact channel is required so your match can reach you. Sign in to raise your limit."
   },
   "offerDetail": {
     "loading": "Loading...",
@@ -134,7 +136,8 @@
     "COUNTERPARTY_NOT_FOUND": "Counterparty not found",
     "ALREADY_RATED": "You already rated this trade",
     "UNKNOWN_ERROR": "Something went wrong",
-    "TRADE_LIMIT_EXCEEDED": "This trade is above your ${maxUsd} limit. Sign in with Telegram to trade larger amounts."
+    "TRADE_LIMIT_EXCEEDED": "This trade is above the ${maxUsd} limit. Sign in (wallet up to $500, Telegram up to $1500) to trade larger amounts.",
+    "CONTACT_REQUIRED": "Add a contact channel (Telegram, WhatsApp...) so your match can reach you."
   },
   "fairness": {
     "fair": "Fair rate",

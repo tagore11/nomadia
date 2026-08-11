@@ -6,11 +6,12 @@
 // message and replay it as the `x-wallet-auth` header. The server re-verifies
 // the signature on every request, so localStorage is not a trust boundary.
 
-import { createSiweMessage, generateSiweNonce } from "viem/siwe";
+import { createSiweMessage, generateSiweNonce, parseSiweMessage } from "viem/siwe";
 import { LOGIN_CHANGE_EVENT } from "./telegram-login";
 
 const STORAGE_KEY = "nomadia_wallet_auth";
 const CHAIN_ID = 84532; // Base Sepolia (V0)
+const AUTH_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 
 export type StoredWalletAuth = { address: string; message: string; signature: string };
 
@@ -25,7 +26,7 @@ export function buildSiweMessage(address: `0x${string}`): string {
     nonce: generateSiweNonce(),
     statement: "Sign in to Nomadia. This proves you control this wallet and is your identity here.",
     issuedAt: new Date(),
-    expirationTime: new Date(Date.now() + 24 * 60 * 60 * 1000),
+    expirationTime: new Date(Date.now() + AUTH_TTL_MS),
   });
 }
 
@@ -35,8 +36,15 @@ export function getStoredWalletAuth(): StoredWalletAuth | null {
   if (!raw) return null;
   try {
     const d = JSON.parse(raw);
-    if (d && typeof d === "object" && d.address && d.message && d.signature) return d as StoredWalletAuth;
-    return null;
+    if (!(d && typeof d === "object" && d.address && d.message && d.signature)) return null;
+    // The server rejects expired SIWE messages; mirror that check here so the
+    // UI never shows a "signed in" state the API will 401.
+    const exp = parseSiweMessage(d.message).expirationTime;
+    if (exp && new Date(exp).getTime() < Date.now()) {
+      window.localStorage.removeItem(STORAGE_KEY);
+      return null;
+    }
+    return d as StoredWalletAuth;
   } catch {
     return null;
   }

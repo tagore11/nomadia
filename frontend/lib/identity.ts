@@ -21,9 +21,14 @@ export type AuthedUser = {
 // Per-trade USD ceiling by tier. USDC/USDT are treated as a 1 USD peg, so a
 // trade's USD exposure is just its crypto amount (see tradeUsdValue).
 export const TIER_MAX_USD: Record<IdentityTier, number> = {
-  light: 100,
+  light: 500,
   phone: 1500, // aligns with the AML per-person guidance (docs/DECISIONS.md D-014)
 };
+
+// Anyone may POST an offer without signing in, capped here, with a contact
+// channel required so the match can still reach them. Claiming always needs
+// a signed-in identity — the anonymous path is post-only.
+export const ANON_MAX_USD = 100;
 
 export function tgIdentity(telegramId: string | number): string {
   return `tg:${telegramId}`;

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { resolveUser } from "@/lib/auth";
 import { toPublicOffer } from "@/lib/offer-view";
 import { listOpenOffers, insertOffer, logEvent, upsertUser } from "@/lib/repo";
-import { tradeUsdValue, tierAllowsTrade, TIER_MAX_USD } from "@/lib/identity";
+import { tradeUsdValue, tierAllowsTrade, TIER_MAX_USD, ANON_MAX_USD } from "@/lib/identity";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
@@ -32,10 +32,7 @@ function isValidShortString(v: unknown, maxLen: number): v is string {
 
 export async function POST(request: NextRequest) {
   const user = await resolveUser(request);
-  if (!user) {
-    return NextResponse.json({ error: "UNAUTHENTICATED" }, { status: 401 });
-  }
-  await upsertUser(user);
+  if (user) await upsertUser(user);
 
   const body = await request.json();
   const { direction, cryptoAmount, cryptoToken, fiatAmount, fiatCurrency, city, wallet, contact } = body;
@@ -51,10 +48,25 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "MISSING_FIELDS" }, { status: 400 });
   }
 
-  // Tier gate: a light identity (wallet/social) is capped per trade; only a
-  // phone-backed Telegram identity clears higher-value offers.
+  const depositorContact = isValidShortString(contact, 80) ? contact.trim() : null;
   const usdValue = tradeUsdValue(Number(cryptoAmount), cryptoToken.trim());
-  if (!tierAllowsTrade(user.tier, usdValue)) {
+
+  // Anonymous posting: allowed up to ANON_MAX_USD, and only with a contact
+  // channel — it's the sole way a match can reach an anonymous poster.
+  // Claiming (matching) always requires a signed-in identity.
+  if (!user) {
+    if (!depositorContact) {
+      return NextResponse.json({ error: "CONTACT_REQUIRED" }, { status: 400 });
+    }
+    if (usdValue == null || usdValue > ANON_MAX_USD) {
+      return NextResponse.json(
+        { error: "TRADE_LIMIT_EXCEEDED", maxUsd: ANON_MAX_USD, tier: "anonymous" },
+        { status: 403 }
+      );
+    }
+  } else if (!tierAllowsTrade(user.tier, usdValue)) {
+    // Tier gate: a light identity (wallet/social) is capped per trade; only a
+    // phone-backed Telegram identity clears higher-value offers.
     return NextResponse.json(
       { error: "TRADE_LIMIT_EXCEEDED", maxUsd: TIER_MAX_USD[user.tier], tier: user.tier },
       { status: 403 }
@@ -64,8 +76,8 @@ export async function POST(request: NextRequest) {
   // Wallet, if provided, must look like an EVM address. A wallet-provider user's
   // own signed-in address is used as a fallback so escrow roles resolve.
   const depositorWallet =
-    typeof wallet === "string" && /^0x[a-fA-F0-9]{40}$/.test(wallet) ? wallet : user.wallet ?? null;
-  const depositorContact = isValidShortString(contact, 80) ? contact.trim() : null;
+    typeof wallet === "string" && /^0x[a-fA-F0-9]{40}$/.test(wallet) ? wallet : user?.wallet ?? null;
+  const depositorId = user?.id ?? `anon:${crypto.randomUUID()}`;
 
   const offer = await insertOffer({
     direction,
@@ -74,16 +86,16 @@ export async function POST(request: NextRequest) {
     fiatAmount: Number(fiatAmount),
     fiatCurrency: fiatCurrency.trim(),
     city: city.trim(),
-    depositorId: user.id,
-    depositorUsername: user.username ?? null,
+    depositorId,
+    depositorUsername: user?.username ?? null,
     depositorWallet,
     depositorContact,
   });
 
   await logEvent("offer_created", {
-    telegramId: user.id,
+    telegramId: depositorId,
     offerId: offer.id,
-    props: { direction, city: city.trim(), provider: user.provider },
+    props: { direction, city: city.trim(), provider: user?.provider ?? "anonymous" },
   });
-  return NextResponse.json({ offer: await toPublicOffer(offer, user.id) }, { status: 201 });
+  return NextResponse.json({ offer: await toPublicOffer(offer, depositorId) }, { status: 201 });
 }

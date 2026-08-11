@@ -6,6 +6,8 @@ import { useAccount } from "wagmi";
 import { useTranslations } from "next-intl";
 import { apiFetch } from "@/lib/api-client";
 import { useApiErrorMessage } from "@/lib/use-api-error-message";
+import { useIdentityStatus } from "@/lib/use-identity-status";
+import { ANON_MAX_USD } from "@/lib/identity";
 import { haptic } from "@/lib/telegram";
 import { PrimaryAction } from "@/components/PrimaryAction";
 import { FairnessBadge } from "@/components/FairnessBadge";
@@ -20,6 +22,7 @@ export default function NewOfferPage() {
   const { address } = useAccount();
   const t = useTranslations("newOffer");
   const errorMessage = useApiErrorMessage();
+  const anonymous = useIdentityStatus() === "anonymous";
 
   const [direction, setDirection] = useState<OfferRow["direction"]>("crypto_to_fiat");
   const [cryptoAmount, setCryptoAmount] = useState("");
@@ -162,9 +165,10 @@ export default function NewOfferPage() {
         </label>
 
         <label className="flex flex-col gap-1 text-sm text-text-muted">
-          {t("contact")}
+          {anonymous ? t("contactRequired") : t("contact")}
           <input
             type="text"
+            required={anonymous}
             value={contact}
             maxLength={80}
             placeholder={t("contactPlaceholder")}
@@ -173,6 +177,12 @@ export default function NewOfferPage() {
           />
           <span className="text-xs text-text-dim">{t("contactHint")}</span>
         </label>
+
+        {anonymous && (
+          <p className="rounded-md border border-border-2 bg-surface px-3 py-2 text-xs text-text-muted">
+            {t("anonNote", { maxUsd: ANON_MAX_USD })}
+          </p>
+        )}
 
         {Number(cryptoAmount) > 0 && Number(fiatAmount) > 0 && (
           <FairnessBadge
