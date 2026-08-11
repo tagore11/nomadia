@@ -1,0 +1,159 @@
+{
+  "brand": {
+    "name": "Nomadia",
+    "postOffer": "Teklif aç",
+    "myOffers": "Tekliflerim",
+    "connectWallet": "Cüzdanı bağla"
+  },
+  "auth": {
+    "signInTitle": "Nomadia'ya giriş yap",
+    "signInBody": "Teklif açmak ve işlem yapmak için giriş yap. Cüzdan, Google/Apple veya Telegram kullanabilirsin.",
+    "signInToPost": "Teklif açmak için giriş yap.",
+    "signInToAct": "Devam etmek için giriş yap.",
+    "signInWithWallet": "Bu cüzdanla giriş yap",
+    "signing": "İmzalanıyor...",
+    "signFailed": "Giriş yapılamadı. Tekrar dene.",
+    "or": "veya",
+    "tierNote": "Cüzdan, Google veya Apple ile $100'a kadar işlem yapabilirsin. Telegram (telefon doğrulamalı) daha yüksek limit açar.",
+    "signOut": "Çıkış yap"
+  },
+  "direction": {
+    "crypto_to_fiat": "Kripto → Nakit",
+    "fiat_to_crypto": "Nakit → Kripto"
+  },
+  "offerStatus": {
+    "open": "Açık",
+    "matched": "Eşleşti",
+    "released": "Tamamlandı",
+    "refunded": "İade edildi",
+    "expired": "Süresi doldu"
+  },
+  "offersList": {
+    "devModeBanner": "Misafir modu — tekliflerin bu cihaza bağlı. Profilini kalıcı tutmak için Telegram'da @nomadp2pbot üzerinden aç.",
+    "title": "Açık teklifler",
+    "subtitle": "Ters yönlü tekliflerle eşleş, buluş, güvenli takas noktasında takas et.",
+    "filterAll": "Hepsi",
+    "loading": "Yükleniyor...",
+    "empty": "Şu an açık teklif yok. İlk teklifi sen aç.",
+    "valueStrip": "Yakınındaki kişilerle yüz yüze nakit ve kripto değiştir. Kripton escrow'da kilitli kalır, yalnız iki taraf da onayladığında serbest kalır.",
+    "emptyTitle": "Burada henüz açık teklif yok",
+    "emptyBody": "İlk sen ol. Neyi değişmek istediğini yaz, yakınında ters yönde eşleşen kişiler seni bulsun.",
+    "how1": "Teklifini aç — hiçbir şey kilitlemez, gaz ödemezsin.",
+    "how2": "Yakınında ters yöne giden biriyle eşleş.",
+    "how3": "Güvenli bir noktada buluş, değiş, escrow serbest kalsın.",
+    "emptyCta": "İlk teklifi sen aç"
+  },
+  "myOffers": {
+    "title": "Tekliflerim",
+    "subtitle": "Açtığın veya eşleştiğin teklifler, aktif ve geçmiş.",
+    "loading": "Yükleniyor...",
+    "empty": "Henüz teklif açmadın veya eşleşmedin."
+  },
+  "newOffer": {
+    "title": "Teklif aç",
+    "subtitle": "Bu sadece niyet kaydı, hiçbir şey kilitlenmez. Kripto kilidi bir eşleşme seçtiğinde açılır — eşleşme olmayan bir teklif için gaz harcamazsın.",
+    "directionCryptoToFiat": "Kriptom var, nakit istiyorum",
+    "directionFiatToCrypto": "Nakitim var, kripto istiyorum",
+    "cryptoAmount": "Kripto tutarı",
+    "token": "Token",
+    "fiatAmount": "Nakit tutarı",
+    "currency": "Para birimi",
+    "region": "Bölge",
+    "walletHint": "Kripto kilidini sen açacaksın — üstteki \"Bağla\" ile cüzdanını bağlarsan bir eşleşme bulduğunda burada kayıtlı olur.",
+    "submit": "Teklifi yayınla",
+    "submitting": "Gönderiliyor...",
+    "contact": "Eşleştiğin kişi sana nasıl ulaşsın? (opsiyonel)",
+    "contactPlaceholder": "@telegram, WhatsApp, Signal...",
+    "contactHint": "Yalnız eşleştiğin kişiye gösterilir, buluşma yerini kararlaştırmak için."
+  },
+  "offerDetail": {
+    "loading": "Yükleniyor...",
+    "region": "Bölge",
+    "opened": "Açıldı",
+    "expires": "Son geçerlilik",
+    "chainOfferId": "Zincir teklif no",
+    "meetupNote": "Güvenli ve halka açık bir takas noktasında buluşun. Güvenli takas noktası: {zone}.",
+    "zoneUnset": "henüz belirlenmedi",
+    "youSend": "Sen veriyorsun",
+    "youReceive": "Sen alıyorsun",
+    "posterLabel": "Teklifi açan",
+    "matchLabel": "Eşleştiğin kişi",
+    "contactPrompt": "Nerede ve ne zaman buluşacağınızı konuşmak için Telegram'dan yaz.",
+    "contactCta": "Telegram sohbetini aç",
+    "noUsername": "Herkese açık Telegram kullanıcı adı yok — tanıştığınız grup üzerinden koordine olun.",
+    "testnetBadge": "Testnet (Base Sepolia) — gerçek para yok",
+    "viewOnExplorer": "Basescan'de gör",
+    "contactVia": "Ona ulaş:"
+  },
+  "reputation": {
+    "newTrader": "Yeni kullanıcı",
+    "trades": "{count, plural, one {# işlem} other {# işlem}}",
+    "label": "İtibar"
+  },
+  "offerSteps": {
+    "accepted": "Eşleşme kabul edildi",
+    "locked": "Fonlar kilitlendi",
+    "confirmed": "Buluşma onaylandı",
+    "released": "Serbest bırakıldı"
+  },
+  "offerActions": {
+    "claim": "Bu eşleşmeyi seç",
+    "connectFirst": "Önce cüzdanını bağla",
+    "contractNotConfigured": "Bu ağ için sözleşme adresi henüz ayarlanmadı (.env.local)",
+    "counterpartyWalletMissing": "Karşı tarafın cüzdan adresi henüz yok",
+    "approving": "İzin veriliyor (approve)...",
+    "locking": "Kilitleniyor...",
+    "lockAmount": "{amount} {token} kilitle",
+    "waitingForLock": "Karşı tarafın kripto tutarını kilitlemesi bekleniyor.",
+    "confirming": "Onaylanıyor...",
+    "confirmTrade": "Takası onayla",
+    "markReleasedTitle": "Zincirde serbest bırakıldı — kaydı güncelle",
+    "refunding": "İade ediliyor...",
+    "refundAfterTimeout": "Süre doldu, iade al",
+    "cancelOffer": "İptal et ve kriptomu geri al",
+    "cancelling": "İptal ediliyor...",
+    "raiseDispute": "Anlaşmazlık başlat",
+    "disputing": "Anlaşmazlık açılıyor...",
+    "stuckHint": "Karşı taraf onayladı ama işlem serbest kalmadı. Bir sorun varsa inceleme için anlaşmazlık başlat."
+  },
+  "rating": {
+    "thanks": "Puanın için teşekkürler.",
+    "prompt": "Bu takas nasıldı?",
+    "starLabel": "{count} yıldız"
+  },
+  "errors": {
+    "UNAUTHENTICATED": "Devam etmek için giriş yap",
+    "MISSING_FIELDS": "Bazı alanlar eksik",
+    "OFFER_NOT_FOUND": "Teklif bulunamadı",
+    "NOT_PARTICIPANT": "Bu teklifin tarafı değilsiniz",
+    "SELF_MATCH": "Kendi teklifinizle eşleşemezsiniz",
+    "OFFER_ALREADY_MATCHED": "Bu teklifi az önce başka biri kaptı",
+    "INVALID_TRANSITION": "{from} durumundan {to} durumuna geçilemez",
+    "ONLY_RELEASED_CAN_BE_RATED": "Sadece tamamlanan işlemler puanlanabilir",
+    "INVALID_RATING": "Puan 1-5 arasında olmalı",
+    "COUNTERPARTY_NOT_FOUND": "Karşı taraf bulunamadı",
+    "ALREADY_RATED": "Bu işlemi zaten puanladınız",
+    "UNKNOWN_ERROR": "Bir şeyler ters gitti",
+    "TRADE_LIMIT_EXCEEDED": "Bu işlem ${maxUsd} limitinin üstünde. Daha büyük işlemler için Telegram ile giriş yap."
+  },
+  "fairness": {
+    "fair": "Adil kur",
+    "above": "Piyasadan %{pct} yukarı",
+    "below": "Piyasadan %{pct} aşağı",
+    "suspicious": "Piyasadan uzak — dikkatle kontrol et",
+    "marketLabel": "Piyasa kuru",
+    "thisOfferLabel": "Bu teklif",
+    "suspiciousHint": "Bu kur piyasa fiyatından belirgin şekilde uzak. Buluşmadan önce nedenini anladığından emin ol.",
+    "advisory": "Yalnızca referans — piyasa kuru günlük güncellenir; ±%3 içindeki değişim adil sayılır. Yatırım tavsiyesi değildir."
+  },
+  "protection": {
+    "title": "Nasıl korunuyorsun",
+    "lockedPoint": "Kripto bir escrow kontratında kilitli — ne Nomadia ne de karşı taraf onu tek başına oynatamaz.",
+    "confirmPoint": "Yalnız ikiniz de işlemin gerçekleştiğini onaylayınca serbest kalır. Onay yoksa, serbest kalma yok.",
+    "disputePoint": "Bir şey ters giderse iki taraf da anlaşmazlık açabilir, tarafsız bir hakem fonun nereye gideceğine karar verir.",
+    "caution": "Seni güvende tutan tek kural: onayı yalnız nakit gerçekten el değiştirdikten sonra tıkla.",
+    "verified": "Escrow zincirde doğrulandı",
+    "verifiedTestnet": "Escrow zincirde doğrulandı (testnet — gerçek para değil)",
+    "proofLink": "Kanıtı gör"
+  }
+}

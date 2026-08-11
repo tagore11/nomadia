@@ -1,0 +1,159 @@
+{
+  "brand": {
+    "name": "Nomadia",
+    "postOffer": "Post offer",
+    "myOffers": "My offers",
+    "connectWallet": "Connect wallet"
+  },
+  "auth": {
+    "signInTitle": "Sign in to Nomadia",
+    "signInBody": "Sign in to post offers and trade. Use a wallet, Google or Apple, or Telegram.",
+    "signInToPost": "Sign in to post an offer.",
+    "signInToAct": "Sign in to continue.",
+    "signInWithWallet": "Sign in with this wallet",
+    "signing": "Signing...",
+    "signFailed": "Couldn't sign in. Please try again.",
+    "or": "or",
+    "tierNote": "Wallet, Google or Apple lets you trade up to $100. Telegram (phone-verified) unlocks higher limits.",
+    "signOut": "Sign out"
+  },
+  "direction": {
+    "crypto_to_fiat": "Crypto → Cash",
+    "fiat_to_crypto": "Cash → Crypto"
+  },
+  "offerStatus": {
+    "open": "Open",
+    "matched": "Matched",
+    "released": "Completed",
+    "refunded": "Refunded",
+    "expired": "Expired"
+  },
+  "offersList": {
+    "devModeBanner": "Guest mode — your offers are tied to this device. Open via @nomadp2pbot in Telegram to keep your profile.",
+    "title": "Open offers",
+    "subtitle": "Match with a reverse-direction offer, meet up, trade at a safe exchange point.",
+    "filterAll": "All",
+    "loading": "Loading...",
+    "empty": "No open offers right now. Be the first to post one.",
+    "valueStrip": "Swap cash and crypto in person with people nearby. Your crypto is locked in escrow and only releases when both sides confirm the trade.",
+    "emptyTitle": "No open offers here yet",
+    "emptyBody": "Be the first. Post what you want to swap and nearby people matching the reverse direction will find you.",
+    "how1": "Post your offer — it locks nothing and costs no gas.",
+    "how2": "Match with someone going the opposite way, nearby.",
+    "how3": "Meet at a safe spot, trade, and the escrow releases.",
+    "emptyCta": "Post the first offer"
+  },
+  "myOffers": {
+    "title": "My offers",
+    "subtitle": "Offers you posted or matched with, active and past.",
+    "loading": "Loading...",
+    "empty": "You haven't posted or matched any offers yet."
+  },
+  "newOffer": {
+    "title": "Post an offer",
+    "subtitle": "This is just an intent — it locks nothing yet. Crypto locks once you pick a match, so you never pay gas for an offer that never gets matched.",
+    "directionCryptoToFiat": "I have crypto, I need cash",
+    "directionFiatToCrypto": "I have cash, I need crypto",
+    "cryptoAmount": "Crypto amount",
+    "token": "Token",
+    "fiatAmount": "Cash amount",
+    "currency": "Currency",
+    "region": "Region",
+    "walletHint": "You'll be the one locking the crypto — connect your wallet above (“Connect”) so it's on file once you get a match.",
+    "submit": "Post offer",
+    "submitting": "Posting...",
+    "contact": "How can your match reach you? (optional)",
+    "contactPlaceholder": "@telegram, WhatsApp, Signal...",
+    "contactHint": "Shown only to the person you match with, so you can agree where to meet."
+  },
+  "offerDetail": {
+    "loading": "Loading...",
+    "region": "Region",
+    "opened": "Opened",
+    "expires": "Expires",
+    "chainOfferId": "On-chain offer",
+    "meetupNote": "Meet at a safe, public exchange point. Safe exchange point: {zone}.",
+    "zoneUnset": "not set yet",
+    "youSend": "You send",
+    "youReceive": "You receive",
+    "posterLabel": "Posted by",
+    "matchLabel": "Your match",
+    "contactPrompt": "Message them on Telegram to agree on where and when to meet.",
+    "contactCta": "Open Telegram chat",
+    "noUsername": "No public Telegram username — coordinate through the group where you met.",
+    "testnetBadge": "Testnet (Base Sepolia) — no real funds involved",
+    "viewOnExplorer": "View on Basescan",
+    "contactVia": "Reach them at:"
+  },
+  "reputation": {
+    "newTrader": "New trader",
+    "trades": "{count, plural, one {# trade} other {# trades}}",
+    "label": "Reputation"
+  },
+  "offerSteps": {
+    "accepted": "Offer accepted",
+    "locked": "Funds locked",
+    "confirmed": "Meetup confirmed",
+    "released": "Released"
+  },
+  "offerActions": {
+    "claim": "Select this match",
+    "connectFirst": "Connect your wallet first",
+    "contractNotConfigured": "This network's contract address isn't set yet (.env.local)",
+    "counterpartyWalletMissing": "The other side doesn't have a wallet on file yet",
+    "approving": "Approving...",
+    "locking": "Locking...",
+    "lockAmount": "Lock {amount} {token}",
+    "waitingForLock": "Waiting for the other side to lock their crypto.",
+    "confirming": "Confirming...",
+    "confirmTrade": "Confirm the trade",
+    "markReleasedTitle": "Released on-chain — update the record",
+    "refunding": "Refunding...",
+    "refundAfterTimeout": "Timeout passed, take your refund",
+    "cancelOffer": "Cancel & unlock my crypto",
+    "cancelling": "Cancelling...",
+    "raiseDispute": "Open a dispute",
+    "disputing": "Opening dispute...",
+    "stuckHint": "The other side confirmed but the trade hasn't released. If something's wrong, open a dispute for review."
+  },
+  "rating": {
+    "thanks": "Thanks for the rating.",
+    "prompt": "How did this trade go?",
+    "starLabel": "{count} star"
+  },
+  "errors": {
+    "UNAUTHENTICATED": "Sign in to continue",
+    "MISSING_FIELDS": "Some fields are missing",
+    "OFFER_NOT_FOUND": "Offer not found",
+    "NOT_PARTICIPANT": "You're not a party to this offer",
+    "SELF_MATCH": "You can't match with your own offer",
+    "OFFER_ALREADY_MATCHED": "Someone else just matched this offer",
+    "INVALID_TRANSITION": "Can't move from {from} to {to}",
+    "ONLY_RELEASED_CAN_BE_RATED": "Only completed trades can be rated",
+    "INVALID_RATING": "Rating must be between 1 and 5",
+    "COUNTERPARTY_NOT_FOUND": "Counterparty not found",
+    "ALREADY_RATED": "You already rated this trade",
+    "UNKNOWN_ERROR": "Something went wrong",
+    "TRADE_LIMIT_EXCEEDED": "This trade is above your ${maxUsd} limit. Sign in with Telegram to trade larger amounts."
+  },
+  "fairness": {
+    "fair": "Fair rate",
+    "above": "{pct}% above market",
+    "below": "{pct}% below market",
+    "suspicious": "Far from market — check carefully",
+    "marketLabel": "Market rate",
+    "thisOfferLabel": "This offer",
+    "suspiciousHint": "This rate is well off the market price. Make sure you understand why before you meet.",
+    "advisory": "Reference only — market rate updates daily; a swap within ±3% counts as fair. Not financial advice."
+  },
+  "protection": {
+    "title": "How you're protected",
+    "lockedPoint": "The crypto is locked in an escrow contract — neither Nomadia nor the other person can move it on their own.",
+    "confirmPoint": "It only releases when both of you confirm the trade happened. No confirm, no release.",
+    "disputePoint": "If something goes wrong, either side can open a dispute and a neutral reviewer decides where the funds go.",
+    "caution": "One rule keeps you safe: only tap confirm after the cash has actually changed hands.",
+    "verified": "Escrow verified on-chain",
+    "verifiedTestnet": "Escrow verified on-chain (testnet — no real funds)",
+    "proofLink": "See the proof"
+  }
+}
