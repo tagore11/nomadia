@@ -11,7 +11,10 @@ export type { OfferRow } from "./db";
 //   - SQLite otherwise (local dev / no DB configured) -> single-instance only.
 // Every function is async so the two backends look identical to the routes.
 
-const OFFER_EXPIRY_HOURS = 24;
+// 7 days: at launch traffic, 24h expiry left the list looking permanently
+// empty — offers died before anyone browsed them. In-person cash meetups are
+// planned days ahead anyway.
+const OFFER_EXPIRY_HOURS = 7 * 24;
 const usePg = !!process.env.DATABASE_URL;
 
 // --- Postgres client (lazy singleton) ------------------------------------

@@ -31,10 +31,11 @@ export const appKitModal = createAppKit({
   themeVariables: { "--w3m-accent": "#3ce089" },
   features: {
     email: true,
-    // Google + Apple only (X/Discord aren't useful for a money app). These need
-    // to be enabled in the Reown dashboard for the project too, otherwise the
-    // button renders but errors on use — wallets (MetaMask etc.) work regardless.
-    socials: ["google", "apple"],
+    // Google/Apple are hidden until Social Login is enabled for this project in
+    // the Reown dashboard (cloud.reown.com) — with it off, the buttons render
+    // but loop on an OAuth error. Restore `socials: ["google", "apple"]` once
+    // the dashboard side is configured; email + wallets work regardless.
+    socials: false,
     emailShowWallets: true,
   },
 });
