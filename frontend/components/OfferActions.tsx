@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useAccount, useChainId, useWriteContract } from "wagmi";
+import { useAccount, useChainId, useSignMessage, useWriteContract } from "wagmi";
 import { waitForTransactionReceipt } from "wagmi/actions";
 import { parseUnits } from "viem";
 import { useTranslations } from "next-intl";
@@ -10,6 +10,10 @@ import { extractOfferIdFromReceipt } from "@/lib/decode-offer-id";
 import { cryptoLockerRole, myRole } from "@/lib/offer-roles";
 import { apiFetch } from "@/lib/api-client";
 import { useApiErrorMessage } from "@/lib/use-api-error-message";
+import { appKitModal } from "@/lib/appkit";
+import { buildSiweMessage, getStoredWalletAuth, setStoredWalletAuth } from "@/lib/wallet-auth";
+import { getStoredLogin } from "@/lib/telegram-login";
+import { getTelegramWebApp } from "@/lib/telegram";
 import { wagmiConfig } from "@/lib/wagmi";
 import { haptic } from "@/lib/telegram";
 import { PrimaryAction } from "./PrimaryAction";
@@ -32,6 +36,7 @@ export function OfferActions({
   refreshOffer: () => Promise<unknown>;
 }) {
   const { address } = useAccount();
+  const { signMessageAsync } = useSignMessage();
   const chainId = useChainId();
   const t = useTranslations("offerActions");
   const errorMessage = useApiErrorMessage();
@@ -86,11 +91,24 @@ export function OfferActions({
   }
 
   async function handleClaim() {
+    // Auth happens AT the claim tap, not before it: an anonymous visitor can
+    // browse freely, and the moment they commit we open the connect modal in
+    // place instead of bouncing them to a sign-in page ("eşleşmeyi seçince
+    // orada bağlat").
     if (!address) {
-      setError(t("connectFirst"));
+      setError(null);
+      appKitModal.open();
       return;
     }
     try {
+      // Connected but not yet a signed-in identity (no Telegram session, no
+      // stored SIWE): collect the SIWE signature inline and continue.
+      const hasTelegram = Boolean(getTelegramWebApp()?.initData) || Boolean(getStoredLogin());
+      if (!hasTelegram && !getStoredWalletAuth()) {
+        const message = buildSiweMessage(address);
+        const signature = await signMessageAsync({ message });
+        setStoredWalletAuth({ address, message, signature });
+      }
       await apiFetch(`/api/offers/${offer.id}`, {
         method: "PATCH",
         body: JSON.stringify({ status: "matched", counterpartyWallet: address }),
