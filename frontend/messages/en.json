@@ -3,7 +3,8 @@
     "name": "Nomadia",
     "postOffer": "Post offer",
     "myOffers": "My offers",
-    "connectWallet": "Connect wallet"
+    "connectWallet": "Connect wallet",
+    "testnetBadge": "TEST VERSION · no real money"
   },
   "auth": {
     "signInTitle": "Sign in to Nomadia",

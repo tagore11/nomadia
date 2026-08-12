@@ -9,6 +9,11 @@ export function NavBar() {
 
   return (
     <header className="border-b border-border">
+      {/* Persistent testnet notice: it must be unmistakable on every screen
+          that no real money moves — both a user-trust and a legal point. */}
+      <div className="bg-amber-500/10 px-4 py-1 text-center text-[11px] font-medium uppercase tracking-wide text-amber-500">
+        {t("testnetBadge")}
+      </div>
       <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-2 px-4 py-3">
         <Link href="/offers" className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-accent">
           <span className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_8px_var(--color-accent)]" />

@@ -105,7 +105,7 @@ export async function insertOffer(o: NewOffer): Promise<OfferRow> {
         depositor_telegram_id, depositor_username, depositor_wallet, depositor_contact, expires_at)
       VALUES (${o.direction}, ${o.cryptoAmount}, ${o.cryptoToken}, ${o.fiatAmount}, ${o.fiatCurrency}, ${o.city},
         ${o.depositorId}, ${o.depositorUsername}, ${o.depositorWallet}, ${o.depositorContact},
-        now() + interval '${sql.unsafe(String(OFFER_EXPIRY_HOURS))} hours')
+        now() + (${OFFER_EXPIRY_HOURS} * interval '1 hour'))
       RETURNING *`;
     return mapPgOffer(rows[0]);
   }

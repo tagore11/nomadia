@@ -3,7 +3,8 @@
     "name": "Nomadia",
     "postOffer": "Разместить объявление",
     "myOffers": "Мои объявления",
-    "connectWallet": "Подключить кошелёк"
+    "connectWallet": "Подключить кошелёк",
+    "testnetBadge": "ТЕСТ · без реальных денег"
   },
   "auth": {
     "signInTitle": "Вход в Nomadia",

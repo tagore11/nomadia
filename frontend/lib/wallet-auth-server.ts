@@ -10,6 +10,19 @@ import { parseSiweMessage } from "viem/siwe";
 // (EIP-1271) wallet would need a public client and is out of V0 scope.
 
 const MAX_FUTURE_SKEW_MS = 5 * 60 * 1000;
+const CHAIN_ID = 84532; // Base Sepolia (V0) — must match lib/wallet-auth.ts
+// Domains this deployment will accept a SIWE message for. A signature is only
+// identity proof if it was issued FOR Nomadia: without this check any valid
+// SIWE signature the user made on any other dApp could be replayed here as
+// login (EIP-4361's whole point is domain binding). Env override lets preview
+// deploys add their own host.
+const ALLOWED_DOMAINS = new Set(
+  [
+    "nomadia-app.vercel.app",
+    process.env.NEXT_PUBLIC_SIWE_DOMAIN,
+    process.env.NODE_ENV !== "production" ? "localhost:3000" : null,
+  ].filter((d): d is string => Boolean(d))
+);
 
 /** Returns the verified lowercase address, or null if the auth is invalid/expired. */
 export async function verifyWalletAuth(header: string): Promise<string | null> {
@@ -32,6 +45,11 @@ export async function verifyWalletAuth(header: string): Promise<string | null> {
   }
   const address = fields.address;
   if (!address) return null;
+
+  // Domain/chain binding: the message must have been signed FOR this app on the
+  // expected chain, not captured from another dApp and replayed here.
+  if (!fields.domain || !ALLOWED_DOMAINS.has(fields.domain)) return null;
+  if (fields.chainId !== CHAIN_ID) return null;
 
   // Freshness: reject expired, or issued implausibly far in the future.
   const now = Date.now();

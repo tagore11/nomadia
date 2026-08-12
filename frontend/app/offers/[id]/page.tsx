@@ -202,16 +202,18 @@ export default function OfferDetailPage({ params }: { params: Promise<{ id: stri
         </p>
       )}
 
-      {myTelegramId && (
-        <OfferActions
-          offer={offer}
-          myTelegramId={myTelegramId}
-          onChainOffer={onChainOffer}
-          onChainDataReady={onChainDataFetched}
-          refetchOnChainOffer={refetchOnChainOffer}
-          refreshOffer={refreshOffer}
-        />
-      )}
+      {/* Render for anonymous visitors too: with an empty identity myRole is
+          "none", so an open offer shows the claim button, and the claim tap
+          opens the connect modal in place (see OfferActions.handleClaim).
+          Gating this on a signed-in identity hid the whole match funnel. */}
+      <OfferActions
+        offer={offer}
+        myTelegramId={myTelegramId ?? ""}
+        onChainOffer={onChainOffer}
+        onChainDataReady={onChainDataFetched}
+        refetchOnChainOffer={refetchOnChainOffer}
+        refreshOffer={refreshOffer}
+      />
 
       {offer.status === "released" && (
         <div className="mt-6 border-t border-border pt-5">

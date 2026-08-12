@@ -3,7 +3,8 @@
     "name": "Nomadia",
     "postOffer": "Teklif aç",
     "myOffers": "Tekliflerim",
-    "connectWallet": "Cüzdanı bağla"
+    "connectWallet": "Cüzdanı bağla",
+    "testnetBadge": "TEST SÜRÜMÜ · gerçek para yok"
   },
   "auth": {
     "signInTitle": "Nomadia'ya giriş yap",
