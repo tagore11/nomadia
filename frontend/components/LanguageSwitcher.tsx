@@ -17,7 +17,7 @@ export function LanguageSwitcher() {
             setLocale(l);
           }}
           aria-current={l === locale}
-          className={`rounded-full px-2.5 py-1 transition-colors ${
+          className={`rounded-full px-2 py-1 transition-colors sm:px-2.5 ${
             l === locale ? "bg-accent-tint text-accent-bright" : "text-text-dim hover:text-text-muted"
           }`}
         >

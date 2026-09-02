@@ -25,15 +25,18 @@ export function NavBar() {
         {/* Telegram Mini App viewports run ~380-430px wide, and RU/TR labels
             run noticeably longer than EN — this row stays icon-first and
             compact rather than desktop-width text links. */}
-        <nav className="flex items-center gap-2">
+        <nav className="flex flex-wrap items-center justify-end gap-1.5 sm:gap-2">
           <LanguageSwitcher />
           <Link
             href="/offers/mine"
             title={t("myOffers")}
             aria-label={t("myOffers")}
-            className="flex h-8 items-center whitespace-nowrap rounded-full border border-border-2 px-3 text-xs text-text-muted transition-colors hover:border-accent hover:text-accent-bright"
+            className="flex h-8 w-8 items-center justify-center whitespace-nowrap rounded-full border border-border-2 text-xs text-text-muted transition-colors hover:border-accent hover:text-accent-bright sm:w-auto sm:px-3"
           >
-            {t("myOffers")}
+            {/* Phone widths get the glyph; the label needs ~90-140px (RU) that
+                the row cannot spare next to the connect button. */}
+            <span className="text-base leading-none sm:hidden" aria-hidden="true">≡</span>
+            <span className="hidden sm:inline">{t("myOffers")}</span>
           </Link>
           <Link
             href="/map"
@@ -54,7 +57,7 @@ export function NavBar() {
           {/* AppKit's connect button — its modal is what exposes email/Google/
               Apple sign-in, unlike RainbowKit's own connect UI which only
               lists wallets. */}
-          <appkit-button size="md" />
+          <appkit-button size="sm" />
         </nav>
       </div>
     </header>
