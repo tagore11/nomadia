@@ -3,6 +3,10 @@ import { resolveUser } from "@/lib/auth";
 import { toPublicOffer } from "@/lib/offer-view";
 import { listOpenOffers, insertOffer, logEvent, upsertUser } from "@/lib/repo";
 import { tradeUsdValue, tierAllowsTrade, TIER_MAX_USD, ANON_MAX_USD } from "@/lib/identity";
+import { allowRequest, clientIp } from "@/lib/rate-limit";
+
+// Anonymous posts per IP per hour. Generous for a person, tight for a script.
+const ANON_POSTS_PER_HOUR = 5;
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
@@ -55,6 +59,9 @@ export async function POST(request: NextRequest) {
   // channel — it's the sole way a match can reach an anonymous poster.
   // Claiming (matching) always requires a signed-in identity.
   if (!user) {
+    if (!allowRequest(`anon-post:${clientIp(request.headers)}`, ANON_POSTS_PER_HOUR, 60 * 60 * 1000)) {
+      return NextResponse.json({ error: "RATE_LIMITED" }, { status: 429 });
+    }
     if (!depositorContact) {
       return NextResponse.json({ error: "CONTACT_REQUIRED" }, { status: 400 });
     }

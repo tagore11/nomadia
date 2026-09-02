@@ -37,6 +37,8 @@ CREATE TABLE IF NOT EXISTS offers (
 -- Self-healing for projects created before the contact columns existed.
 ALTER TABLE offers ADD COLUMN IF NOT EXISTS depositor_contact    TEXT;
 ALTER TABLE offers ADD COLUMN IF NOT EXISTS counterparty_contact TEXT;
+-- Reference FX rate frozen at match time (JSON) — dispute evidence.
+ALTER TABLE offers ADD COLUMN IF NOT EXISTS match_rate_snapshot  TEXT;
 
 CREATE INDEX IF NOT EXISTS idx_offers_status_expires ON offers (status, expires_at);
 CREATE INDEX IF NOT EXISTS idx_offers_depositor      ON offers (depositor_telegram_id);
@@ -84,6 +86,10 @@ CREATE TABLE IF NOT EXISTS users (
   first_seen TIMESTAMPTZ NOT NULL DEFAULT now(),
   last_seen  TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+-- Web of trust: shareable invite code + who vouched for this user.
+ALTER TABLE users ADD COLUMN IF NOT EXISTS invite_code TEXT;
+ALTER TABLE users ADD COLUMN IF NOT EXISTS invited_by  TEXT;
+CREATE UNIQUE INDEX IF NOT EXISTS idx_users_invite_code ON users (invite_code);
 
 -- Row Level Security ---------------------------------------------------------
 -- The app connects with the service role (server-side API routes only), which

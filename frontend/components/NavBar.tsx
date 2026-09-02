@@ -3,9 +3,12 @@
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { useIdentityStatus } from "@/lib/use-identity-status";
 
 export function NavBar() {
   const t = useTranslations("brand");
+  // Mini App users skip the marketing home; the brand mark takes them to the board.
+  const home = useIdentityStatus() === "miniapp" ? "/offers" : "/";
 
   return (
     <header className="border-b border-border">
@@ -15,7 +18,7 @@ export function NavBar() {
         {t("testnetBadge")}
       </div>
       <div className="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-2 px-4 py-3">
-        <Link href="/offers" className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-accent">
+        <Link href={home} className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-accent">
           <span className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_8px_var(--color-accent)]" />
           {t("name")}
         </Link>

@@ -2,7 +2,10 @@ import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import "./globals.css";
 import { Providers } from "./providers";
+import { Suspense } from "react";
 import { NavBar } from "@/components/NavBar";
+import { Footer } from "@/components/Footer";
+import { InviteRedeemer } from "@/components/InviteRedeemer";
 
 export const metadata: Metadata = {
   title: "Nomadia",
@@ -42,7 +45,12 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <Providers>
           <NavBar />
+          {/* useSearchParams needs a Suspense boundary during static render. */}
+          <Suspense fallback={null}>
+            <InviteRedeemer />
+          </Suspense>
           <main className="flex-1">{children}</main>
+          <Footer />
         </Providers>
       </body>
     </html>

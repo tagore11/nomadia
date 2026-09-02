@@ -17,6 +17,7 @@ import { ProtectionPanel } from "@/components/ProtectionPanel";
 import { EscrowStepper } from "@/components/EscrowStepper";
 import { RatingWidget } from "@/components/RatingWidget";
 import { ReputationBadge } from "@/components/ReputationBadge";
+import { VouchBadge } from "@/components/VouchBadge";
 import type { PublicOffer } from "@/lib/offer-types";
 
 const BASE_MAINNET_ID = 8453;
@@ -136,6 +137,11 @@ export default function OfferDetailPage({ params }: { params: Promise<{ id: stri
         <span className="text-text-muted">{t("posterLabel")}</span>
         <ReputationBadge reputation={offer.depositorReputation} />
       </div>
+      {(offer.depositorVouchedBy || offer.depositorVouchCount > 0) && (
+        <div className="mt-1 flex justify-end">
+          <VouchBadge vouchedBy={offer.depositorVouchedBy} vouchCount={offer.depositorVouchCount} variant="full" />
+        </div>
+      )}
 
       {currentStep !== null && (
         <div className="mt-6">
@@ -161,6 +167,23 @@ export default function OfferDetailPage({ params }: { params: Promise<{ id: stri
         <dd className="text-foreground">
           {format.dateTime(new Date(offer.expires_at), { dateStyle: "medium", timeStyle: "short" })}
         </dd>
+        {offer.matchRate && (
+          <>
+            <dt className="text-text-muted">{t("rateAtMatch")}</dt>
+            <dd className="text-foreground">
+              <span className="font-mono [font-variant-numeric:tabular-nums]">
+                1 {offer.crypto_token} ≈ {format.number(offer.matchRate.referencePerCrypto, { maximumFractionDigits: 2 })}{" "}
+                {offer.matchRate.fiatCurrency}
+              </span>
+              <span className="ml-2 text-xs text-text-dim">
+                {format.dateTime(new Date(offer.matchRate.at), { dateStyle: "medium", timeStyle: "short" })}
+              </span>
+              <p className="mt-0.5 text-xs text-text-dim">
+                {t("rateAtMatchHint", { delta: format.number(offer.matchRate.deltaPct, { maximumFractionDigits: 1, signDisplay: "always" }) })}
+              </p>
+            </dd>
+          </>
+        )}
       </dl>
 
       {/* Match contact: once matched, participants see the other party's handle so

@@ -3,6 +3,7 @@ import type { OfferRow } from "@/lib/db";
 import { resolveUser } from "@/lib/auth";
 import { toPublicOffer } from "@/lib/offer-view";
 import { getOffer, claimOffer, updateOfferByParticipant, logEvent, upsertUser } from "@/lib/repo";
+import { buildRateSnapshot, fetchReferenceRates } from "@/lib/rates";
 import { tradeUsdValue, tierAllowsTrade, TIER_MAX_USD } from "@/lib/identity";
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
@@ -65,6 +66,16 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
         { status: 403 }
       );
     }
+    // Freeze the market reference at the moment of commitment (dispute evidence).
+    const now = Date.now();
+    const snapshot = buildRateSnapshot({
+      cryptoAmount: offer.crypto_amount,
+      cryptoToken: offer.crypto_token,
+      fiatAmount: offer.fiat_amount,
+      fiatCurrency: offer.fiat_currency,
+      rates: await fetchReferenceRates(now),
+      now,
+    });
     // Atomic conditional claim (WHERE status='open'): a racing second claimer
     // gets null instead of both winning.
     const claimed = await claimOffer(id, {
@@ -73,6 +84,7 @@ export async function PATCH(request: NextRequest, { params }: { params: Promise<
       cpWallet: cpWallet ?? user.wallet ?? null,
       cpContact,
       chainId,
+      rateSnapshot: snapshot ? JSON.stringify(snapshot) : null,
     });
     if (!claimed) {
       return NextResponse.json({ error: "OFFER_ALREADY_MATCHED" }, { status: 409 });

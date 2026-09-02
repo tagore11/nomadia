@@ -3,6 +3,7 @@ import { useTranslations, useFormatter } from "next-intl";
 import type { PublicOffer } from "@/lib/offer-types";
 import { ReputationBadge } from "./ReputationBadge";
 import { FairnessBadge } from "./FairnessBadge";
+import { VouchBadge } from "./VouchBadge";
 
 export function OfferCard({ offer }: { offer: PublicOffer }) {
   const t = useTranslations();
@@ -55,6 +56,11 @@ export function OfferCard({ offer }: { offer: PublicOffer }) {
           <ReputationBadge reputation={offer.depositorReputation} />
         </span>
       </div>
+      {offer.depositorVouchedBy && (
+        <div className="mt-1">
+          <VouchBadge vouchedBy={offer.depositorVouchedBy} vouchCount={offer.depositorVouchCount} />
+        </div>
+      )}
     </Link>
   );
 }

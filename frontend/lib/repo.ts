@@ -1,9 +1,10 @@
 import "server-only";
 import postgres from "postgres";
-import { getDb, logEvent as sqliteLogEvent, type OfferRow, type FunnelEvent } from "./db";
+import { randomBytes } from "node:crypto";
+import { getDb, logEvent as sqliteLogEvent, type OfferRow, type UserRow, type FunnelEvent } from "./db";
 import type { Reputation } from "./offer-types";
 
-export type { OfferRow } from "./db";
+export type { OfferRow, UserRow } from "./db";
 
 // Data-access layer with two interchangeable backends, chosen by DATABASE_URL:
 //   - Postgres (Supabase) when DATABASE_URL is set  -> shared, persistent, so
@@ -25,6 +26,28 @@ function pg() {
     _sql = postgres(process.env.DATABASE_URL as string, { prepare: false });
   }
   return _sql;
+}
+
+// Additive, idempotent migrations applied once per process so a deploy never
+// depends on someone remembering to run docs/db/schema.postgres.sql by hand.
+// Mirrors the ALTER ... IF NOT EXISTS lines in that file.
+let _pgMigrated: Promise<void> | null = null;
+function ensurePg() {
+  if (!_pgMigrated) {
+    _pgMigrated = (async () => {
+      const sql = pg();
+      await sql.unsafe(`
+        ALTER TABLE offers ADD COLUMN IF NOT EXISTS match_rate_snapshot TEXT;
+        ALTER TABLE users  ADD COLUMN IF NOT EXISTS invite_code TEXT;
+        ALTER TABLE users  ADD COLUMN IF NOT EXISTS invited_by  TEXT;
+        CREATE UNIQUE INDEX IF NOT EXISTS idx_users_invite_code ON users (invite_code);
+      `);
+    })().catch((e) => {
+      _pgMigrated = null; // retry on the next call
+      throw e;
+    });
+  }
+  return _pgMigrated;
 }
 
 // Postgres returns Date/NUMERIC; normalise a row to the OfferRow shape the
@@ -49,6 +72,7 @@ function mapPgOffer(r: Record<string, unknown>): OfferRow {
     depositor_contact: (r.depositor_contact as string) ?? null,
     counterparty_contact: (r.counterparty_contact as string) ?? null,
     safe_zone: (r.safe_zone as string) ?? null,
+    match_rate_snapshot: (r.match_rate_snapshot as string) ?? null,
     status: r.status as OfferRow["status"],
     created_at: iso(r.created_at),
     expires_at: iso(r.expires_at),
@@ -125,10 +149,13 @@ export async function insertOffer(o: NewOffer): Promise<OfferRow> {
 export type ClaimFields = {
   userId: string; username: string | null; cpWallet: string | null;
   cpContact: string | null; chainId: number | null;
+  /** JSON-serialised reference rate at the moment of matching (see lib/rates.ts). */
+  rateSnapshot: string | null;
 };
 
 export async function claimOffer(id: string | number, f: ClaimFields): Promise<OfferRow | null> {
   if (usePg) {
+    await ensurePg();
     const sql = pg();
     const rows = await sql`
       UPDATE offers SET status = 'matched',
@@ -136,7 +163,8 @@ export async function claimOffer(id: string | number, f: ClaimFields): Promise<O
         counterparty_username = ${f.username},
         counterparty_wallet = COALESCE(${f.cpWallet}, counterparty_wallet),
         counterparty_contact = COALESCE(${f.cpContact}, counterparty_contact),
-        chain_offer_id = COALESCE(${f.chainId}, chain_offer_id)
+        chain_offer_id = COALESCE(${f.chainId}, chain_offer_id),
+        match_rate_snapshot = ${f.rateSnapshot}
       WHERE id = ${Number(id)} AND status = 'open'
       RETURNING *`;
     return rows[0] ? mapPgOffer(rows[0]) : null;
@@ -147,10 +175,11 @@ export async function claimOffer(id: string | number, f: ClaimFields): Promise<O
       `UPDATE offers SET status='matched', counterparty_telegram_id=?, counterparty_username=?,
         counterparty_wallet=COALESCE(?, counterparty_wallet),
         counterparty_contact=COALESCE(?, counterparty_contact),
-        chain_offer_id=COALESCE(?, chain_offer_id)
+        chain_offer_id=COALESCE(?, chain_offer_id),
+        match_rate_snapshot=?
        WHERE id = ? AND status = 'open'`
     )
-    .run(f.userId, f.username, f.cpWallet, f.cpContact, f.chainId, id);
+    .run(f.userId, f.username, f.cpWallet, f.cpContact, f.chainId, f.rateSnapshot, id);
   if (info.changes === 0) return null;
   return db.prepare("SELECT * FROM offers WHERE id = ?").get(id) as OfferRow;
 }
@@ -260,6 +289,8 @@ export type Stats = {
   offers: { total: number; byStatus: Record<string, number> };
   funnel: Record<string, number>;
   repeatPosters: number;
+  /** Users who redeemed someone's invite (have a voucher). */
+  vouchedUsers: number;
 };
 
 function tally(rows: { k: string; n: number }[]): Record<string, number> {
@@ -281,12 +312,15 @@ export async function getStats(): Promise<Stats> {
       SELECT count(*)::int n FROM (
         SELECT depositor_telegram_id FROM offers GROUP BY depositor_telegram_id HAVING count(*) >= 2
       ) t`;
+    await ensurePg();
+    const [vouched] = await sql`SELECT count(*)::int n FROM users WHERE invited_by IS NOT NULL`;
     const rl = (r: unknown) => r as unknown as { k: string; n: number }[];
     return {
       users: { total: Number(uTotal.n), byProvider: tally(rl(byProvider)), byTier: tally(rl(byTier)) },
       offers: { total: Number(oTotal.n), byStatus: tally(rl(byStatus)) },
       funnel: tally(rl(funnel)),
       repeatPosters: Number(repeat.n),
+      vouchedUsers: Number(vouched.n),
     };
   }
   const db = getDb();
@@ -297,11 +331,13 @@ export async function getStats(): Promise<Stats> {
   const byStatus = db.prepare("SELECT status k, count(*) n FROM offers GROUP BY status").all() as { k: string; n: number }[];
   const funnel = db.prepare("SELECT name k, count(*) n FROM events GROUP BY name").all() as { k: string; n: number }[];
   const repeat = (db.prepare("SELECT count(*) n FROM (SELECT depositor_telegram_id FROM offers GROUP BY depositor_telegram_id HAVING count(*) >= 2)").get() as { n: number }).n;
+  const vouched = (db.prepare("SELECT count(*) n FROM users WHERE invited_by IS NOT NULL").get() as { n: number }).n;
   return {
     users: { total: uTotal, byProvider: tally(byProvider), byTier: tally(byTier) },
     offers: { total: oTotal, byStatus: tally(byStatus) },
     funnel: tally(funnel),
     repeatPosters: repeat,
+    vouchedUsers: vouched,
   };
 }
 
@@ -334,4 +370,146 @@ export async function upsertUser(u: {
   } catch {
     /* best-effort */
   }
+}
+
+// --- web of trust: invite codes + "vouched by" ----------------------------
+// Nomadia stays open (anyone can post a small offer), so an invite is not a
+// gate — it is a trust signal. Redeeming someone's code records them as your
+// voucher, and strangers see "vouched by @them" next to your offers.
+
+function newInviteCode(): string {
+  // 8 chars, unambiguous alphabet (no 0/O/1/I).
+  const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  const bytes = randomBytes(8);
+  let out = "";
+  for (let i = 0; i < 8; i++) out += alphabet[bytes[i] % alphabet.length];
+  return out;
+}
+
+function mapPgUser(r: Record<string, unknown>): UserRow {
+  const iso = (v: unknown) => (v instanceof Date ? v.toISOString() : String(v));
+  return {
+    id: String(r.id),
+    provider: String(r.provider),
+    tier: String(r.tier),
+    username: (r.username as string) ?? null,
+    wallet: (r.wallet as string) ?? null,
+    invite_code: (r.invite_code as string) ?? null,
+    invited_by: (r.invited_by as string) ?? null,
+    first_seen: iso(r.first_seen),
+    last_seen: iso(r.last_seen),
+  };
+}
+
+export async function getUser(id: string): Promise<UserRow | null> {
+  if (usePg) {
+    await ensurePg();
+    const rows = await pg()`SELECT * FROM users WHERE id = ${id} LIMIT 1`;
+    return rows[0] ? mapPgUser(rows[0]) : null;
+  }
+  return (getDb().prepare("SELECT * FROM users WHERE id = ?").get(id) as UserRow | undefined) ?? null;
+}
+
+/** Returns the user's invite code, minting one on first request. */
+export async function ensureInviteCode(id: string): Promise<string> {
+  const existing = await getUser(id);
+  if (existing?.invite_code) return existing.invite_code;
+  // Retry on the (astronomically rare) unique collision.
+  for (let attempt = 0; attempt < 5; attempt++) {
+    const code = newInviteCode();
+    try {
+      if (usePg) {
+        await ensurePg();
+        const rows = await pg()`
+          UPDATE users SET invite_code = COALESCE(invite_code, ${code})
+          WHERE id = ${id} RETURNING invite_code`;
+        if (rows[0]?.invite_code) return String(rows[0].invite_code);
+      } else {
+        getDb().prepare("UPDATE users SET invite_code = COALESCE(invite_code, ?) WHERE id = ?").run(code, id);
+        const row = getDb().prepare("SELECT invite_code FROM users WHERE id = ?").get(id) as
+          | { invite_code: string | null }
+          | undefined;
+        if (row?.invite_code) return row.invite_code;
+      }
+      throw new Error("USER_NOT_FOUND");
+    } catch (e) {
+      if (e instanceof Error && e.message === "USER_NOT_FOUND") throw e;
+      /* unique collision → try another code */
+    }
+  }
+  throw new Error("INVITE_CODE_UNAVAILABLE");
+}
+
+export type RedeemResult =
+  | { ok: true; voucher: UserRow }
+  | { ok: false; error: "INVITE_INVALID" | "INVITE_SELF" | "ALREADY_VOUCHED" };
+
+/** Records `code`'s owner as the voucher of `userId`. One voucher per user, ever. */
+export async function redeemInvite(userId: string, code: string): Promise<RedeemResult> {
+  const normalized = code.trim().toUpperCase();
+  if (!/^[A-Z2-9]{8}$/.test(normalized)) return { ok: false, error: "INVITE_INVALID" };
+
+  let voucher: UserRow | null = null;
+  if (usePg) {
+    await ensurePg();
+    const rows = await pg()`SELECT * FROM users WHERE invite_code = ${normalized} LIMIT 1`;
+    voucher = rows[0] ? mapPgUser(rows[0]) : null;
+  } else {
+    voucher =
+      (getDb().prepare("SELECT * FROM users WHERE invite_code = ?").get(normalized) as UserRow | undefined) ?? null;
+  }
+  if (!voucher) return { ok: false, error: "INVITE_INVALID" };
+  if (voucher.id === userId) return { ok: false, error: "INVITE_SELF" };
+  // A vouch chain must not loop back (A vouches B, B vouches A).
+  if (voucher.invited_by === userId) return { ok: false, error: "INVITE_INVALID" };
+
+  // Conditional update: only the first redemption sticks.
+  let changed = 0;
+  if (usePg) {
+    const rows = await pg()`
+      UPDATE users SET invited_by = ${voucher.id}
+      WHERE id = ${userId} AND invited_by IS NULL RETURNING id`;
+    changed = rows.length;
+  } else {
+    changed = getDb()
+      .prepare("UPDATE users SET invited_by = ? WHERE id = ? AND invited_by IS NULL")
+      .run(voucher.id, userId).changes;
+  }
+  if (changed === 0) return { ok: false, error: "ALREADY_VOUCHED" };
+  return { ok: true, voucher };
+}
+
+/** How a user is shown to strangers: @username, else a masked wallet/id. */
+export function publicHandle(u: Pick<UserRow, "id" | "username" | "wallet">): string {
+  if (u.username) return `@${u.username.replace(/^@/, "")}`;
+  const addr = u.wallet ?? (u.id.startsWith("wallet:") ? u.id.slice("wallet:".length) : null);
+  if (addr && addr.length > 10) return `${addr.slice(0, 6)}…${addr.slice(-4)}`;
+  return u.id.startsWith("tg:") ? "Telegram user" : "member";
+}
+
+export type VouchInfo = { vouchedBy: string | null; vouchCount: number };
+
+/** Who vouched for `id` (public handle) and how many people they vouched for. */
+export async function getVouchInfo(id: string): Promise<VouchInfo> {
+  if (usePg) {
+    await ensurePg();
+    const sql = pg();
+    const [me] = await sql`SELECT invited_by FROM users WHERE id = ${id} LIMIT 1`;
+    const inviterId = (me?.invited_by as string | null) ?? null;
+    const [inviter, count] = await Promise.all([
+      inviterId ? sql`SELECT id, username, wallet FROM users WHERE id = ${inviterId} LIMIT 1` : Promise.resolve([]),
+      sql`SELECT count(*)::int AS n FROM users WHERE invited_by = ${id}`,
+    ]);
+    const row = inviter[0] as Pick<UserRow, "id" | "username" | "wallet"> | undefined;
+    return { vouchedBy: row ? publicHandle(row) : null, vouchCount: Number(count[0]?.n ?? 0) };
+  }
+  const db = getDb();
+  const me = db.prepare("SELECT invited_by FROM users WHERE id = ?").get(id) as { invited_by: string | null } | undefined;
+  const inviter = me?.invited_by
+    ? (db.prepare("SELECT id, username, wallet FROM users WHERE id = ?").get(me.invited_by) as
+        | Pick<UserRow, "id" | "username" | "wallet">
+        | undefined)
+    : undefined;
+  const count = db.prepare("SELECT count(*) AS n FROM users WHERE invited_by = ?").get(id) as { n: number };
+  return { vouchedBy: inviter ? publicHandle(inviter) : null, vouchCount: Number(count?.n ?? 0) };
 }

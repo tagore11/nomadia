@@ -7,6 +7,7 @@ import { useApiErrorMessage } from "@/lib/use-api-error-message";
 import { useIdentityStatus } from "@/lib/use-identity-status";
 import { OfferCard } from "@/components/OfferCard";
 import { SignInGate } from "@/components/SignInGate";
+import { InvitePanel } from "@/components/InvitePanel";
 import type { PublicOffer } from "@/lib/offer-types";
 
 export default function MyOffersPage() {
@@ -32,6 +33,7 @@ export default function MyOffersPage() {
         </div>
       ) : (
         <div className="mt-6 grid gap-3">
+          <InvitePanel />
           {isLoading && <p className="text-text-muted">{t("loading")}</p>}
           {error && <p className="text-danger">{errorMessage(error)}</p>}
           {data?.offers.length === 0 && <p className="text-text-muted">{t("empty")}</p>}

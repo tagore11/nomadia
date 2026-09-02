@@ -1,4 +1,5 @@
-import { getReputation } from "./repo";
+import { getReputation, getVouchInfo } from "./repo";
+import { parseRateSnapshot } from "./rates";
 import type { OfferRow } from "./db";
 import type { PublicOffer } from "./offer-types";
 
@@ -10,10 +11,12 @@ export async function toPublicOffer(offer: OfferRow, viewerTelegramId: string | 
     viewerTelegramId != null && offer.counterparty_telegram_id === viewerTelegramId;
   const isParticipant = isDepositor || isCounterparty;
 
-  const [depositorReputation, counterpartyReputation] = await Promise.all([
+  const [depositorReputation, counterpartyReputation, vouch] = await Promise.all([
     getReputation(offer.depositor_telegram_id),
     offer.counterparty_telegram_id ? getReputation(offer.counterparty_telegram_id) : Promise.resolve(null),
+    getVouchInfo(offer.depositor_telegram_id),
   ]);
+  const snapshot = parseRateSnapshot(offer.match_rate_snapshot);
 
   const base: PublicOffer = {
     id: offer.id,
@@ -30,6 +33,17 @@ export async function toPublicOffer(offer: OfferRow, viewerTelegramId: string | 
     safe_zone: offer.safe_zone,
     depositorReputation,
     counterpartyReputation,
+    depositorVouchedBy: vouch.vouchedBy,
+    depositorVouchCount: vouch.vouchCount,
+    matchRate: snapshot
+      ? {
+          fiatCurrency: snapshot.fiatCurrency,
+          referencePerCrypto: snapshot.referencePerCrypto,
+          impliedPerCrypto: snapshot.impliedPerCrypto,
+          deltaPct: snapshot.deltaPct,
+          at: snapshot.at,
+        }
+      : null,
     viewerRole: isDepositor ? "depositor" : isCounterparty ? "counterparty" : null,
   };
 

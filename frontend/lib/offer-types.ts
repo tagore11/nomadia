@@ -7,6 +7,15 @@ export type OfferStatus = "open" | "matched" | "released" | "refunded" | "expire
 
 export type Reputation = { avgStars: number | null; ratingCount: number };
 
+/** Market reference frozen when the offer was matched (see lib/rates.ts). */
+export type MatchRate = {
+  fiatCurrency: string;
+  referencePerCrypto: number;
+  impliedPerCrypto: number;
+  deltaPct: number;
+  at: string;
+};
+
 // What the API exposes about an offer (see lib/offer-view.ts). Raw Telegram IDs
 // and contact fields are present only for the two participants of a trade;
 // strangers see amounts, location, and reputation only.
@@ -25,6 +34,11 @@ export type PublicOffer = {
   safe_zone: string | null;
   depositorReputation: Reputation;
   counterpartyReputation: Reputation | null;
+  /** Public handle of whoever vouched for the poster, if anyone. */
+  depositorVouchedBy: string | null;
+  /** How many members the poster has vouched for. */
+  depositorVouchCount: number;
+  matchRate: MatchRate | null;
   viewerRole: "depositor" | "counterparty" | null;
   depositor_wallet?: string | null;
   counterparty_wallet?: string | null;

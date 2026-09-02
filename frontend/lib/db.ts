@@ -96,6 +96,9 @@ export function getDb(): Database.Database {
     "counterparty_username TEXT",
     "depositor_contact TEXT",
     "counterparty_contact TEXT",
+    // Reference FX rate frozen at match time (JSON) — dispute evidence for the
+    // fair price both sides agreed to.
+    "match_rate_snapshot TEXT",
   ]) {
     try {
       db.exec(`ALTER TABLE offers ADD COLUMN ${col};`);
@@ -103,6 +106,16 @@ export function getDb(): Database.Database {
       /* column already exists */
     }
   }
+  // Web of trust: every user gets a shareable invite code; redeeming one records
+  // who vouched for you (shown as "vouched by" on your offers).
+  for (const col of ["invite_code TEXT", "invited_by TEXT"]) {
+    try {
+      db.exec(`ALTER TABLE users ADD COLUMN ${col};`);
+    } catch {
+      /* column already exists */
+    }
+  }
+  db.exec("CREATE UNIQUE INDEX IF NOT EXISTS idx_users_invite_code ON users(invite_code);");
 
   return db;
 }
@@ -125,9 +138,22 @@ export type OfferRow = {
   depositor_contact: string | null;
   counterparty_contact: string | null;
   safe_zone: string | null;
+  match_rate_snapshot: string | null;
   status: "open" | "matched" | "released" | "refunded" | "expired";
   created_at: string;
   expires_at: string;
+};
+
+export type UserRow = {
+  id: string;
+  provider: string;
+  tier: string;
+  username: string | null;
+  wallet: string | null;
+  invite_code: string | null;
+  invited_by: string | null;
+  first_seen: string;
+  last_seen: string;
 };
 
 // The funnel steps we track for conversion/retention analysis. Kept as a closed
@@ -140,7 +166,8 @@ export type FunnelEvent =
   | "offer_refunded"
   | "offer_cancelled"
   | "offer_disputed"
-  | "rating_submitted";
+  | "rating_submitted"
+  | "invite_redeemed";
 
 /**
  * Record a funnel event. Analytics must never break a trade action, so any

@@ -102,3 +102,54 @@ export async function fetchReferenceRates(now: number): Promise<ReferenceRates |
     return cache?.data ?? null;
   }
 }
+
+// --- match-time snapshot ---------------------------------------------------
+// When an offer is claimed, the market reference is frozen alongside the trade
+// so a later dispute ("the rate was unfair") can be judged against the price
+// both sides saw at the moment they committed, not against today's market.
+
+export type RateSnapshot = {
+  fiatCurrency: string;
+  /** Market fiat units per 1 crypto unit at match time. */
+  referencePerCrypto: number;
+  /** Fiat units per 1 crypto unit implied by the offer itself. */
+  impliedPerCrypto: number;
+  deltaPct: number;
+  /** ISO timestamp of the reference rate (not of the match). */
+  referenceAt: string;
+  /** ISO timestamp of the match. */
+  at: string;
+};
+
+/** Builds a snapshot for an offer, or null when no reference is available. */
+export function buildRateSnapshot(args: {
+  cryptoAmount: number;
+  cryptoToken: string;
+  fiatAmount: number;
+  fiatCurrency: string;
+  rates: ReferenceRates | null;
+  now: number;
+}): RateSnapshot | null {
+  const f = assessFairness(args);
+  if (!f || !args.rates) return null;
+  return {
+    fiatCurrency: args.fiatCurrency.toUpperCase(),
+    referencePerCrypto: f.referencePerCrypto,
+    impliedPerCrypto: f.impliedPerCrypto,
+    deltaPct: f.deltaPct,
+    referenceAt: args.rates.updatedAt,
+    at: new Date(args.now).toISOString(),
+  };
+}
+
+/** Parses a stored snapshot column; tolerant of nulls and bad JSON. */
+export function parseRateSnapshot(raw: string | null | undefined): RateSnapshot | null {
+  if (!raw) return null;
+  try {
+    const v = JSON.parse(raw);
+    if (typeof v?.referencePerCrypto !== "number" || typeof v?.fiatCurrency !== "string") return null;
+    return v as RateSnapshot;
+  } catch {
+    return null;
+  }
+}
