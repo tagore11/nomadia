@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { apiFetch } from "@/lib/api-client";
 import { useApiErrorMessage } from "@/lib/use-api-error-message";
@@ -33,7 +34,12 @@ export default function OffersPage() {
       </div>
 
       <h1 className="text-2xl font-bold text-foreground">{t("title")}</h1>
-      <p className="mt-1 text-sm text-text-muted">{t("subtitle")}</p>
+      <p className="mt-1 text-sm text-text-muted">
+        {t("subtitle")}{" "}
+        <Link href="/map" className="text-accent-bright underline decoration-dotted underline-offset-2">
+          {t("mapLink")}
+        </Link>
+      </p>
 
       {/* Threshold strip: the home route redirects straight here, so this one line
           is the first thing a newcomer reads — what Nomadia is and why it's safe. */}

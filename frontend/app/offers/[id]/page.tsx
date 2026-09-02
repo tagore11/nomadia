@@ -18,6 +18,7 @@ import { EscrowStepper } from "@/components/EscrowStepper";
 import { RatingWidget } from "@/components/RatingWidget";
 import { ReputationBadge } from "@/components/ReputationBadge";
 import { VouchBadge } from "@/components/VouchBadge";
+import { MeetingPoint } from "@/components/MeetingPoint";
 import type { PublicOffer } from "@/lib/offer-types";
 
 const BASE_MAINNET_ID = 8453;
@@ -219,11 +220,7 @@ export default function OfferDetailPage({ params }: { params: Promise<{ id: stri
         </div>
       )}
 
-      {offer.status !== "open" && (
-        <p className="mt-4 text-sm text-text-muted">
-          {t("meetupNote", { zone: offer.safe_zone || t("zoneUnset") })}
-        </p>
-      )}
+      <MeetingPoint offer={offer} />
 
       {/* Render for anonymous visitors too: with an empty identity myRole is
           "none", so an open offer shows the claim button, and the claim tap

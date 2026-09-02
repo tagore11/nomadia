@@ -4,7 +4,8 @@
     "postOffer": "Teklif aç",
     "myOffers": "Tekliflerim",
     "connectWallet": "Cüzdanı bağla",
-    "testnetBadge": "TEST SÜRÜMÜ · gerçek para yok"
+    "testnetBadge": "TEST SÜRÜMÜ · gerçek para yok",
+    "map": "Güvenli takas haritası"
   },
   "auth": {
     "signInTitle": "Nomadia'ya giriş yap",
@@ -42,7 +43,8 @@
     "how1": "Teklifini aç — hiçbir şey kilitlemez, gaz ödemezsin.",
     "how2": "Yakınında ters yöne giden biriyle eşleş.",
     "how3": "Güvenli bir noktada buluş, değiş, escrow serbest kalsın.",
-    "emptyCta": "İlk teklifi sen aç"
+    "emptyCta": "İlk teklifi sen aç",
+    "mapLink": "Nerede buluşulur ↗"
   },
   "myOffers": {
     "title": "Tekliflerim",
@@ -75,8 +77,6 @@
     "opened": "Açıldı",
     "expires": "Son geçerlilik",
     "chainOfferId": "Zincir teklif no",
-    "meetupNote": "Güvenli ve halka açık bir takas noktasında buluşun. Güvenli takas noktası: {zone}.",
-    "zoneUnset": "henüz belirlenmedi",
     "youSend": "Sen veriyorsun",
     "youReceive": "Sen alıyorsun",
     "posterLabel": "Teklifi açan",
@@ -211,14 +211,16 @@
     "citiesBody": "Pilot, Eylül 2026'daki ZuKaş residency ile Kaş, Türkiye'de yürüyor. Üyeler birbirine kefil oldukça yeni koridorlar açılıyor.",
     "pilot": "pilot",
     "closingTitle": "Takas edecek nakdin ya da kripton var mı?",
-    "closingBody": "Teklif vermek ücretsiz, bir dakikadan kısa sürer. Teklifin yedi gün yayında kalır."
+    "closingBody": "Teklif vermek ücretsiz, bir dakikadan kısa sürer. Teklifin yedi gün yayında kalır.",
+    "mapLink": "Güvenli takas noktalarını haritada gör"
   },
   "footer": {
     "home": "Ana sayfa",
     "howItWorks": "Nasıl çalışır",
     "compliance": "Uyum",
     "offers": "Teklifler",
-    "status": "Testnet · Base Sepolia"
+    "status": "Testnet · Base Sepolia",
+    "map": "Harita"
   },
   "howItWorks": {
     "title": "Nomadia nasıl çalışır",
@@ -281,5 +283,66 @@
     "responsibility_body": "Vergi bildirimi ve nakit işlemlere dair yerel kurallar dahil, sana uygulanan yasalara uymak senin sorumluluğundadır. Nomadia, birbiriyle takas yapmayı seçen iki kişi için bir araçtır.",
     "contact_title": "İletişim",
     "contact_body": "Soru, bildirim ya da kaldırma talebi için ekibe Telegram botu @nomadp2pbot üzerinden ulaş ya da GitHub'da bir issue aç."
+  },
+  "venues": {
+    "partnerBadge": "Anlaşmalı mekan",
+    "openNow": "Şu an açık",
+    "closedNow": "Şu an kapalı",
+    "directions": "Yol tarifi",
+    "meetsAt": "Buluşma: {venue}",
+    "dataNote": "Konumlar OpenStreetMap'ten alındı. Çalışma saatleri yaklaşıktır, gitmeden önce kontrol edin.",
+    "kind": {
+      "partner": "Nomadia partneri",
+      "bank": "Banka şubesi",
+      "post": "Postane",
+      "police": "Polis / Jandarma",
+      "municipal": "Kamu binası",
+      "hotel": "Otel lobisi",
+      "mall": "Alışveriş merkezi"
+    },
+    "notes": {
+      "partnerCowork": "Nomadia buluşmalarına ev sahipliği yapan coworking. Ekip escrow akışını biliyor; wifi, masa ve kapıda kamera var. Takası burada tamamlayın.",
+      "bank": "Kamera, güvenlik görevlisi ve diğer müşteriler. Parayı sokakta değil gişede sayın.",
+      "post": "Kameralı, gündüz personelli kamu gişesi. Küçük tutarlar için uygun.",
+      "municipal": "Girişte güvenlik olan kamu binası. Sadece mesai saatlerinde.",
+      "police": "7/24 açık. Karakol önünde buluşmak iki tarafın da dürüst olduğunun güçlü bir işareti.",
+      "hotel": "Lobiler aydınlık, 24 saat personelli ve bekleyen yabancılara alışkın.",
+      "mall": "Kalabalık, klimalı, her yerde kamera. Koridoru gören bir kafe seçin."
+    }
+  },
+  "map": {
+    "eyebrow": "Güvenli takas haritası",
+    "title": "Nerede buluşulur",
+    "subtitle": "Her takas yüz yüze biter. Güvenli olduğunu bildiğimiz yerler: Nomadia buluşmalarını ağırlayan anlaşmalı mekanlar ve kameralı, kalabalık kamusal noktalar.",
+    "openCount": "{n, plural, =0 {açık ilan yok} =1 {1 açık ilan} other {# açık ilan}}",
+    "legendPartner": "Anlaşmalı mekan",
+    "legendPublic": "Kamusal güvenli nokta",
+    "partnerTitle": "Anlaşmalı mekanlar",
+    "partnerBody": "Nomadia buluşmalarını ağırlamayı kabul eden yerler. Nomadia takası için geldiğinizi söyleyin, bir masaya oturun, escrow'u telefonlarınızdan tamamlayın.",
+    "noPartnerYet": "{city} için henüz anlaşmalı mekan yok.",
+    "becomePartner": "Burada kafe ya da coworking işletiyor musunuz? Bize yazın.",
+    "publicTitle": "Kamusal güvenli noktalar",
+    "publicBody": "Nomadia ile bağlantılı değil. Kamera, personel ve gün ışığı olduğu için seçildi.",
+    "rulesTitle": "Buluşma kuralları",
+    "rule_daylight": "Gün ışığında, mekanın içinde buluşun; asla arabada ya da ara sokakta değil.",
+    "rule_inside": "Sadece ilandaki tutarı getirin. Parayı masada, kameranın gördüğü yerde sayın.",
+    "rule_onchain": "Escrow'u ancak nakit elinizde ve sayılmışken serbest bırakın. Öncesinde asla.",
+    "rule_walk": "Bir şey ters geliyorsa çekilin. Escrow süre dolunca iade edilir, kimse kaybetmez.",
+    "pickingFor": "#{id} numaralı ilan için buluşma noktası seçiliyor",
+    "viewingFor": "#{id} numaralı ilan için buluşma noktaları",
+    "backToOffer": "İlana dön",
+    "useAsPoint": "Buluşma noktası yap",
+    "currentPoint": "Mevcut buluşma noktası",
+    "webglUnsupported": "Bu cihaz haritayı çizemiyor. Aşağıdaki mekan listesi ve yol tarifi bağlantıları yine çalışır."
+  },
+  "meetingPoint": {
+    "title": "Buluşma noktası",
+    "openMap": "Haritayı aç",
+    "unsetParticipant": "Henüz seçilmedi. Aşağıdaki güvenli mekanlardan birini seçin, karşı taraf burada görecek.",
+    "unsetPublic": "Eşleşince iki taraf güvenli bir mekan seçer.",
+    "pickLabel": "Güvenli mekan seç",
+    "changeTo": "Mekanı değiştir",
+    "save": "Kaydet",
+    "hint": "Anlaşmalı mekanlar (◈) Nomadia buluşmalarını ağırlar. Kamusal noktalarda kamera ve personel var. Seçimi iki taraf da görür."
   }
 }

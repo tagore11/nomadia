@@ -151,6 +151,9 @@ export default function HomePage() {
             </span>
           ))}
         </div>
+        <Link href="/map" className="mt-4 inline-block text-sm text-accent-bright underline decoration-dotted">
+          {t("mapLink")}
+        </Link>
       </section>
 
       {/* Closing CTA */}

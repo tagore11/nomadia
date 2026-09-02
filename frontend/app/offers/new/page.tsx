@@ -12,8 +12,8 @@ import { haptic } from "@/lib/telegram";
 import { PrimaryAction } from "@/components/PrimaryAction";
 import { FairnessBadge } from "@/components/FairnessBadge";
 import type { OfferRow } from "@/lib/db";
+import { CITIES } from "@/lib/venues";
 
-const CITIES = ["Dubai Marina", "Kaş"];
 const CRYPTO_TOKENS = ["USDC", "USDT"];
 const FIAT_CURRENCIES = ["AED", "USD", "TRY"];
 
@@ -29,7 +29,7 @@ export default function NewOfferPage() {
   const [cryptoToken, setCryptoToken] = useState(CRYPTO_TOKENS[0]);
   const [fiatAmount, setFiatAmount] = useState("");
   const [fiatCurrency, setFiatCurrency] = useState(FIAT_CURRENCIES[0]);
-  const [city, setCity] = useState(CITIES[0]);
+  const [city, setCity] = useState<string>(CITIES[0]);
   const [contact, setContact] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);

@@ -4,6 +4,7 @@ import type { PublicOffer } from "@/lib/offer-types";
 import { ReputationBadge } from "./ReputationBadge";
 import { FairnessBadge } from "./FairnessBadge";
 import { VouchBadge } from "./VouchBadge";
+import { findVenue } from "@/lib/venues";
 
 export function OfferCard({ offer }: { offer: PublicOffer }) {
   const t = useTranslations();
@@ -59,6 +60,14 @@ export function OfferCard({ offer }: { offer: PublicOffer }) {
       {offer.depositorVouchedBy && (
         <div className="mt-1">
           <VouchBadge vouchedBy={offer.depositorVouchedBy} vouchCount={offer.depositorVouchCount} />
+        </div>
+      )}
+      {offer.safe_zone && (
+        <div className="mt-1.5 flex items-center gap-1.5 text-xs">
+          <span className={findVenue(offer.safe_zone)?.kind === "partner" ? "text-accent-bright" : "text-text-dim"} aria-hidden="true">
+            ◈
+          </span>
+          <span className="text-text-muted">{t("venues.meetsAt", { venue: offer.safe_zone })}</span>
         </div>
       )}
     </Link>

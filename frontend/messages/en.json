@@ -4,7 +4,8 @@
     "postOffer": "Post offer",
     "myOffers": "My offers",
     "connectWallet": "Connect wallet",
-    "testnetBadge": "TEST VERSION · no real money"
+    "testnetBadge": "TEST VERSION · no real money",
+    "map": "Safe exchange map"
   },
   "auth": {
     "signInTitle": "Sign in to Nomadia",
@@ -42,7 +43,8 @@
     "how1": "Post your offer — it locks nothing and costs no gas.",
     "how2": "Match with someone going the opposite way, nearby.",
     "how3": "Meet at a safe spot, trade, and the escrow releases.",
-    "emptyCta": "Post the first offer"
+    "emptyCta": "Post the first offer",
+    "mapLink": "Where to meet ↗"
   },
   "myOffers": {
     "title": "My offers",
@@ -75,8 +77,6 @@
     "opened": "Opened",
     "expires": "Expires",
     "chainOfferId": "On-chain offer",
-    "meetupNote": "Meet at a safe, public exchange point. Safe exchange point: {zone}.",
-    "zoneUnset": "not set yet",
     "youSend": "You send",
     "youReceive": "You receive",
     "posterLabel": "Posted by",
@@ -211,14 +211,16 @@
     "citiesBody": "The pilot runs in Kaş, Türkiye, with the ZuKaş residency in September 2026. More corridors open as members vouch each other in.",
     "pilot": "pilot",
     "closingTitle": "Have cash or crypto to swap?",
-    "closingBody": "Posting is free and takes under a minute. Your offer stays live for seven days."
+    "closingBody": "Posting is free and takes under a minute. Your offer stays live for seven days.",
+    "mapLink": "See safe exchange points on the map"
   },
   "footer": {
     "home": "Home",
     "howItWorks": "How it works",
     "compliance": "Compliance",
     "offers": "Offers",
-    "status": "Testnet · Base Sepolia"
+    "status": "Testnet · Base Sepolia",
+    "map": "Map"
   },
   "howItWorks": {
     "title": "How Nomadia works",
@@ -281,5 +283,66 @@
     "responsibility_body": "You are responsible for following the laws that apply to you, including tax reporting and any local rules on cash transactions. Nomadia is a tool for two people who choose to trade with each other.",
     "contact_title": "Contact",
     "contact_body": "Questions, reports, or a takedown request: reach the team through the Telegram bot @nomadp2pbot or open an issue on GitHub."
+  },
+  "venues": {
+    "partnerBadge": "Agreed venue",
+    "openNow": "Open now",
+    "closedNow": "Closed now",
+    "directions": "Directions",
+    "meetsAt": "Meets at {venue}",
+    "dataNote": "Locations come from OpenStreetMap. Opening hours are indicative, check before you go.",
+    "kind": {
+      "partner": "Nomadia partner",
+      "bank": "Bank branch",
+      "post": "Post office",
+      "police": "Police / Gendarmerie",
+      "municipal": "Government building",
+      "hotel": "Hotel lobby",
+      "mall": "Shopping mall"
+    },
+    "notes": {
+      "partnerCowork": "Coworking space that hosts Nomadia meetups. Staff know the escrow flow, there is wifi, a table and a camera at the door. Finish the whole trade here.",
+      "bank": "Cameras, a security guard and other customers. Count the cash at the counter, not on the street.",
+      "post": "Public counter with cameras and daytime staff. Good for small amounts.",
+      "municipal": "Public building with security at the entrance. Daytime only.",
+      "police": "Open 24h. Meeting in front of the station is a strong signal both sides are honest.",
+      "hotel": "Lobbies are lit, staffed around the clock and used to strangers waiting.",
+      "mall": "Crowded, air conditioned, cameras everywhere. Pick a cafe with a view of the corridor."
+    }
+  },
+  "map": {
+    "eyebrow": "Safe exchange map",
+    "title": "Where to meet",
+    "subtitle": "Every trade ends face to face. These are the places we know are safe: partner venues that host Nomadia meetups, and public spots with cameras and people around.",
+    "openCount": "{n, plural, =0 {no open offers} =1 {1 open offer} other {# open offers}}",
+    "legendPartner": "Agreed venue",
+    "legendPublic": "Public safe spot",
+    "partnerTitle": "Agreed venues",
+    "partnerBody": "Places that have agreed to host Nomadia meetups. Say you are here for a Nomadia trade, take a table, finish the escrow on your phones.",
+    "noPartnerYet": "No agreed venue in {city} yet.",
+    "becomePartner": "Run a cafe or coworking here? Message us.",
+    "publicTitle": "Public safe spots",
+    "publicBody": "Not affiliated with Nomadia. Chosen because they have cameras, staff and daylight.",
+    "rulesTitle": "Meetup rules",
+    "rule_daylight": "Meet in daylight, inside the venue, never in a car or a side street.",
+    "rule_inside": "Bring only the amount in the offer. Count cash at the table, in view of the camera.",
+    "rule_onchain": "Release the escrow only after the cash is in your hand and counted. Never before.",
+    "rule_walk": "Anything feels off? Walk away. The escrow refunds on expiry, nobody loses.",
+    "pickingFor": "Choosing a meeting point for offer #{id}",
+    "viewingFor": "Meeting points for offer #{id}",
+    "backToOffer": "Back to offer",
+    "useAsPoint": "Use as meeting point",
+    "currentPoint": "Current meeting point",
+    "webglUnsupported": "This device cannot draw the map. The venue list below still works, with directions links."
+  },
+  "meetingPoint": {
+    "title": "Meeting point",
+    "openMap": "Open map",
+    "unsetParticipant": "Not set yet. Pick one of the safe venues below, your counterparty will see it here.",
+    "unsetPublic": "The two parties pick a safe venue once matched.",
+    "pickLabel": "Pick a safe venue",
+    "changeTo": "Change venue",
+    "save": "Save",
+    "hint": "Agreed venues (◈) host Nomadia meetups. Public spots have cameras and staff. Both sides see the choice."
   }
 }

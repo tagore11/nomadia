@@ -13,6 +13,7 @@ export function Footer() {
     { href: "/how-it-works", label: t("howItWorks") },
     { href: "/compliance", label: t("compliance") },
     { href: "/offers", label: t("offers") },
+    { href: "/map", label: t("map") },
   ];
 
   return (

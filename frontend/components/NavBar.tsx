@@ -31,9 +31,17 @@ export function NavBar() {
             href="/offers/mine"
             title={t("myOffers")}
             aria-label={t("myOffers")}
-            className="flex h-8 items-center rounded-full border border-border-2 px-3 text-xs text-text-muted transition-colors hover:border-accent hover:text-accent-bright"
+            className="flex h-8 items-center whitespace-nowrap rounded-full border border-border-2 px-3 text-xs text-text-muted transition-colors hover:border-accent hover:text-accent-bright"
           >
             {t("myOffers")}
+          </Link>
+          <Link
+            href="/map"
+            title={t("map")}
+            aria-label={t("map")}
+            className="flex h-8 w-8 items-center justify-center rounded-full border border-border-2 text-sm leading-none text-text-muted transition-colors hover:border-accent hover:text-accent-bright"
+          >
+            ◎
           </Link>
           <Link
             href="/offers/new"
