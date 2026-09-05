@@ -1,0 +1,17 @@
+{
+  "name": "nomadia-cli",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Agent-friendly CLI wrapper for the Nomadia API (offers, rates, stats, auth)",
+  "type": "module",
+  "bin": {
+    "nomadia": "./bin/nomadia.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "viem": "^2.47.5",
+    "yargs": "^17.7.2"
+  }
+}

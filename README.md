@@ -16,6 +16,10 @@ by a non-custodial escrow contract. Start here:
 - `backend/` — empty; V0 folded the API into `frontend/app/api/*` (Next.js
   route handlers) instead of a separate service. Split it out only if scale
   actually requires it.
+- `cli/` — `nomadia` CLI wrapping `frontend/app/api/*` (offers, rates, stats,
+  auth) for scripting/ops; see `cli/README.md`
+- `mcp/` — MCP server exposing the public read endpoints (offers, rates,
+  stats) as tools for AI agents; see `mcp/README.md`
 
 ## Run it
 
