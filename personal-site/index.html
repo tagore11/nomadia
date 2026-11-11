@@ -5,53 +5,55 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Prof. Dr. Şevki Serkan Erdoğan</title>
 <meta name="description" content="Prof. Dr. Şevki Serkan Erdoğan: bilgisayar bilimci, akademisyen ve girişimci. / Computer scientist, academic and entrepreneur.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0e1621;--bg2:#142132;--card:#182a3f;--ink:#eaf0f7;--mute:#9fb0c3;--acc:#f2b84b;--acc2:#4fc3c7;--line:#243750}
-@media (prefers-color-scheme:light){:root{--bg:#f6f4ef;--bg2:#ece8df;--card:#fff;--ink:#1b2430;--mute:#5a6675;--acc:#b9770e;--acc2:#0f7c82;--line:#ddd6c8}}
+:root{--bg:#FFFFFF;--ink:#111111;--mute:#4A4A4A;--line:#D2D2D2;--ph:#EDEDED}
 html[lang=tr] [lang=en],html[lang=en] [lang=tr]{display:none}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;font:17px/1.65 Georgia,"Times New Roman",serif;background:var(--bg);color:var(--ink)}
-h1,h2,h3,nav,.tag,.btn,.stat b{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-a{color:var(--acc2)}
+body{margin:0;font:19px/1.7 "Source Serif 4",Georgia,serif;font-weight:400;background:var(--bg);color:var(--ink)}
+h1,h2,h3{font-family:"Source Serif 4",Georgia,serif;font-weight:700}
+nav,.tag,.btn,.langs button,.stat span,.tl em,.card small{font-family:-apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif}
+a{color:var(--ink)}
 .wrap{max-width:1040px;margin:0 auto;padding:0 16px}
-nav{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav{position:sticky;top:0;z-index:5;background:#FFFFFF;border-bottom:1px solid var(--line)}
 nav .wrap{display:flex;gap:18px;align-items:center;overflow-x:auto;white-space:nowrap;padding:12px 16px}
-nav b{margin-right:auto;color:var(--acc)}nav a{color:var(--mute);text-decoration:none;font-size:14px}nav a:hover{color:var(--ink)}
-.langs{display:flex;gap:4px}.langs button{font:600 13px system-ui;padding:5px 11px;border-radius:99px;border:1px solid var(--line);background:transparent;color:var(--mute);cursor:pointer}
-html[lang=tr] #bTR,html[lang=en] #bEN{background:var(--acc);color:#1b2430;border-color:var(--acc)}
-.hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#0b3a53,#1b2f5a 55%,#5a2e63);color:#fff}
-.hero .bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.35}
-.hero .wrap{position:relative;padding:96px 16px 80px}
-.tag{display:inline-block;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#f2b84b}
-h1{font-size:clamp(34px,6vw,60px);line-height:1.08;margin:.3em 0}
-.lead{max-width:640px;font-size:20px;color:#dbe6f2}
-.btns{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
-.btn{padding:11px 20px;border-radius:999px;text-decoration:none;font-weight:600;font-size:15px;background:#f2b84b;color:#1b2430}
-.btn.o{background:transparent;color:#fff;border:1px solid #ffffff80}
+nav b{margin-right:auto;font-family:"Source Serif 4",Georgia,serif;font-weight:700}nav a{color:var(--mute);text-decoration:none;font-size:14px}nav a:hover{color:var(--ink)}
+.langs{display:flex;gap:4px}.langs button{font-weight:600;font-size:13px;padding:5px 11px;border-radius:99px;border:1px solid var(--line);background:transparent;color:var(--mute);cursor:pointer}
+html[lang=tr] #bTR,html[lang=en] #bEN{background:var(--ink);color:#FFFFFF;border-color:var(--ink)}
+.hero{text-align:center;border-bottom:1px solid var(--line)}
+.hero .wrap{padding:88px 16px 40px}
+.tag{display:inline-block;font-size:14px;color:var(--mute)}
+h1{font-size:clamp(36px,6vw,64px);line-height:1.1;margin:.3em 0}
+.lead{max-width:680px;margin:0 auto;font-size:22px;color:var(--mute)}
+.btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:28px}
+.btn{padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:600;font-size:15px;background:var(--ink);color:#FFFFFF;border:1px solid var(--ink)}
+.btn.o{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+.hero .bg{max-width:1040px;margin:0 auto 56px;width:calc(100% - 32px);aspect-ratio:21/9;border-radius:10px;background-size:cover;background-position:center;background-color:var(--ph)}
 section{padding:64px 0;border-top:1px solid var(--line)}
-h2{font-size:30px;margin:0 0 6px}h2+p.sub{color:var(--mute);margin:0 0 28px}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-top:-44px;position:relative;z-index:2}
-.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
-.stat b{display:block;font-size:30px;color:var(--acc)}.stat span{color:var(--mute);font-size:14px}
-.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
-.card h3{margin:0 0 4px;font-size:18px}.card small{color:var(--acc)}
-.card p{margin:8px 0 0;color:var(--mute);font-size:15px}
-a.lnk{text-decoration:none;color:inherit;display:block}a.lnk:hover{border-color:var(--acc)}
-.tl{border-left:2px solid var(--line);margin-left:6px}
+.hero+.wrap+section{border-top:0}
+h2{font-size:32px;margin:0 0 6px}h2+p.sub{color:var(--mute);margin:0 0 28px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0;padding:36px 0}
+.stat{padding:0 18px;border-left:1px solid var(--line)}.stat:first-child{border-left:0;padding-left:0}
+.stat b{display:block;font-family:"Source Serif 4",Georgia,serif;font-size:34px;font-weight:700}.stat>span{color:var(--mute);font-size:14px}
+.grid{display:grid;gap:28px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.card{border-top:1px solid var(--ink);padding:16px 0 0}
+.card h3{margin:0 0 4px;font-size:20px}.card small{color:var(--mute);font-size:13px}
+.card p{margin:8px 0 0;color:var(--mute);font-size:17px}
+a.lnk{text-decoration:none;color:inherit;display:block}a.lnk:hover h3{text-decoration:underline}
+.tl{border-left:1px solid var(--line);margin-left:6px}
 .tl div{position:relative;padding:0 0 22px 24px}
-.tl div:before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--acc)}
-.tl b{font-family:system-ui,sans-serif}.tl em{display:block;color:var(--acc2);font-style:normal;font-size:14px;font-family:system-ui,sans-serif}
-.tl span.d{color:var(--mute);font-size:15px;display:block}
-figure{margin:0;border-radius:14px;overflow:hidden;background:var(--card);border:1px solid var(--line)}
-figure .ph{aspect-ratio:4/3;background-size:cover;background-position:center;background-color:var(--bg2);display:flex;align-items:flex-end}
-figure .ph i{font:normal 13px system-ui;color:#fff;background:#0009;padding:4px 10px;margin:10px;border-radius:99px}
-figcaption{padding:12px 16px;font-size:14px;color:var(--mute)}
-.video{aspect-ratio:16/9;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#000}
+.tl div:before{content:"";position:absolute;left:-5px;top:9px;width:9px;height:9px;background:var(--ink)}
+.tl em{display:block;color:var(--mute);font-style:normal;font-size:14px}
+.tl span.d{color:var(--mute);font-size:17px;display:block}
+figure{margin:0}
+figure .ph{aspect-ratio:4/3;border-radius:10px;background-size:cover;background-position:center;background-color:var(--ph)}
+figcaption{padding:10px 0 0;font-size:15px;color:var(--mute)}
+.video{aspect-ratio:16/9;border-radius:10px;overflow:hidden;background:#000}
 .video iframe{width:100%;height:100%;border:0}
-ol.pubs{padding-left:20px}ol.pubs li{margin-bottom:12px;color:var(--mute);font-size:15px}ol.pubs b{color:var(--ink);font-weight:600}
+ol.pubs{padding-left:22px}ol.pubs li{margin-bottom:12px;color:var(--mute);font-size:17px}ol.pubs b{color:var(--ink);font-weight:600}
 footer{padding:40px 0;text-align:center;color:var(--mute);font-size:14px;border-top:1px solid var(--line)}
-.note{font-size:13px;color:var(--mute);margin-top:10px}
+.note{font-size:15px;color:var(--mute);margin-top:10px}
 </style>
 </head>
 <body>
@@ -60,21 +62,21 @@ footer{padding:40px 0;text-align:center;color:var(--mute);font-size:14px;border-
 <span class="langs"><button id="bTR" onclick="setLang('tr')">TR</button><button id="bEN" onclick="setLang('en')">EN</button></span></div></nav>
 
 <header class="hero">
-  <div class="bg" data-img="Hilo Town and Mauna Kea.JPG"></div>
   <div class="wrap">
     <span class="tag"><span lang="tr">Bilgisayar Bilimci · Akademisyen · Girişimci</span><span lang="en">Computer Scientist · Academic · Entrepreneur</span></span>
     <h1>Prof. Dr. Şevki Serkan Erdoğan</h1>
-    <p class="lead"><span lang="tr">Manchester'dan Singapur'a, Hawaii'den Kaş'a: bilgisayar mühendisliği eğitimine, araştırmaya ve sürdürülebilir girişimciliğe yarım asrı aşan emek.</span><span lang="en">From Manchester to Singapore, from Hawaii to Kaş: over four decades devoted to computer engineering education, research and sustainable entrepreneurship.</span></p>
+    <p class="lead"><span lang="tr">Manchester'dan Singapur'a, Hawaii'den Kaş'a: bilgisayar mühendisliği eğitimine, araştırmaya ve sürdürülebilir girişimciliğe kırk yılı aşkın emek.</span><span lang="en">From Manchester to Singapore, from Hawaii to Kaş: over four decades devoted to computer engineering education, research and sustainable entrepreneurship.</span></p>
     <div class="btns"><a class="btn" href="#kariyer"><span lang="tr">Kariyer yolculuğu</span><span lang="en">Career journey</span></a><a class="btn o" href="#iletisim"><span lang="tr">İletişime geç</span><span lang="en">Get in touch</span></a></div>
   </div>
+  <div class="bg" data-img="Hilo Town and Mauna Kea.JPG" role="img" aria-label="Hilo and Mauna Kea"></div>
 </header>
 
 <div class="wrap">
   <div class="stats">
-    <div class="stat"><b>34 M$</b><span><span lang="tr">NSF proje fonu (lider araştırmacı)</span><span lang="en">NSF project funding (lead investigator)</span></span></div>
+    <div class="stat"><b>20 + 14 M$</b><span><span lang="tr">NSF siber altyapı fonları</span><span lang="en">NSF cyberinfrastructure grants</span></span></div>
     <div class="stat"><b>91</b><span><span lang="tr">makale, bildiri ve yazı</span><span lang="en">papers, proceedings and articles</span></span></div>
     <div class="stat"><b><span lang="tr">40+ yıl</span><span lang="en">40+ yrs</span></b><span><span lang="tr">akademik görev</span><span lang="en">in academia</span></span></div>
-    <div class="stat"><b><span lang="tr">4 kıta</span><span lang="en">4 regions</span></b><span><span lang="tr">Avrupa, Asya, Amerika, Türkiye</span><span lang="en">Europe, Asia, America, Türkiye</span></span></div>
+    <div class="stat"><b>~80</b><span><span lang="tr">Barbarossa'da istihdam edilen kişi</span><span lang="en">people employed at Barbarossa</span></span></div>
   </div>
 </div>
 
@@ -135,14 +137,14 @@ footer{padding:40px 0;text-align:center;color:var(--mute);font-size:14px;border-
 <section id="konusmalar"><div class="wrap">
   <h2><span lang="tr">Videolar</span><span lang="en">Videos</span></h2><p class="sub"><span lang="tr">Konuşmalar, röportajlar ve Akdeniz kıyıları</span><span lang="en">Talks, interviews and the Mediterranean coast</span></p>
   <div class="grid">
-    <div><div class="video"><iframe src="https://www.youtube-nocookie.com/embed/Nw8M-WbphGc" title="Video 1" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div><p class="note"><a href="https://youtu.be/Nw8M-WbphGc" target="_blank" rel="noopener">YouTube ↗</a></p></div>
-    <div><div class="video"><iframe src="https://www.youtube-nocookie.com/embed/HyRBn-ybIxA" title="Video 2" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div><p class="note"><a href="https://youtu.be/HyRBn-ybIxA" target="_blank" rel="noopener">YouTube ↗</a></p></div>
+    <div><div class="video"><iframe src="https://www.youtube-nocookie.com/embed/Nw8M-WbphGc" title="Arınma Yolculuğu: Prof. Şevki Serkan Erdoğan ile Detoks" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div><p class="note"><a href="https://youtu.be/Nw8M-WbphGc" target="_blank" rel="noopener">YouTube ↗</a> · Club Barbarossa Hotel</p></div>
+    <div><div class="video"><iframe src="https://www.youtube-nocookie.com/embed/HyRBn-ybIxA" title="Önlenemez Yükseliş, TEDxAlanya HGFL Youth" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div><p class="note"><a href="https://youtu.be/HyRBn-ybIxA" target="_blank" rel="noopener">YouTube ↗</a> · TEDxAlanya</p></div>
     <div><div class="video"><iframe src="https://www.youtube-nocookie.com/embed/D_a19fuLgmA" title="Antalya from Above" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div><p class="note"><span lang="tr">Antalya kıyıları (Kaş'ın bulunduğu bölge). Video: One Man Wolf Pack, YouTube.</span><span lang="en">Antalya coast (the region of Kaş). Video: One Man Wolf Pack, YouTube.</span></p></div>
   </div>
   <h3 style="margin:34px 0 12px;font-family:system-ui"><span lang="tr">Haberler ve profil sayfaları</span><span lang="en">News and profile pages</span></h3>
   <div class="grid">
-    <a class="card lnk" href="https://share.google/oCoqIIANTul4xekf2" target="_blank" rel="noopener"><small><span lang="tr">Bağlantı 1</span><span lang="en">Link 1</span></small><h3><span lang="tr">Kaydı aç</span><span lang="en">Open </span>&rarr;</h3></a>
-    <a class="card lnk" href="https://share.google/4cugCZJVUNCJxe1yh" target="_blank" rel="noopener"><small><span lang="tr">Bağlantı 2</span><span lang="en">Link 2</span></small><h3><span lang="tr">Kaydı aç</span><span lang="en">Open </span>&rarr;</h3></a>
+    <a class="card lnk" href="https://share.google/oCoqIIANTul4xekf2" target="_blank" rel="noopener"><small><span lang="tr">Haber</span><span lang="en">News</span></small><h3><span lang="tr">Kaydı aç</span> <span lang="en">Open</span> &rarr;</h3></a>
+    <a class="card lnk" href="https://share.google/4cugCZJVUNCJxe1yh" target="_blank" rel="noopener"><small><span lang="tr">Haber</span><span lang="en">News</span></small><h3><span lang="tr">Kaydı aç</span> <span lang="en">Open</span> &rarr;</h3></a>
     <a class="card lnk" href="https://www.hawaii.edu/hpc/rotm/erdogan.html" target="_blank" rel="noopener"><small>hawaii.edu</small><h3><span lang="tr">Hawaii Üniversitesi profil sayfası</span><span lang="en">University of Hawaii profile page</span> &rarr;</h3></a>
   </div>
 </div></section>
@@ -179,7 +181,7 @@ function setLang(l){document.documentElement.lang=l;try{localStorage.setItem('la
 document.querySelectorAll('[data-img]').forEach(function(el,i){
   var f=el.getAttribute('data-img');
   var url='https://commons.wikimedia.org/wiki/Special:FilePath/'+encodeURIComponent(f.replace(/ /g,'_'))+'?width=1200';
-  el.style.backgroundImage='linear-gradient(135deg,hsl('+(200+i*35)+' 45% 28%),hsl('+(240+i*35)+' 40% 22%))';
+  
   var img=new Image();
   img.onload=function(){el.style.backgroundImage='url("'+url+'")'};
   img.src=url;
