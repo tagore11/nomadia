@@ -51,7 +51,7 @@ footer{padding:40px 0;text-align:center;color:var(--mute);font-size:14px;border-
 </style>
 </head>
 <body>
-<nav><div class="wrap"><b>Ş. S. Erdoğan</b><a href="#hakkinda">Hakkında</a><a href="#kariyer">Kariyer</a><a href="#arastirma">Araştırma</a><a href="#girisim">Girişimcilik</a><a href="#medya">Medya</a><a href="#yayinlar">Yayınlar</a><a href="#iletisim">İletişim</a></div></nav>
+<nav><div class="wrap"><b>Ş. S. Erdoğan</b><a href="#hakkinda">Hakkında</a><a href="#kariyer">Kariyer</a><a href="#arastirma">Araştırma</a><a href="#girisim">Girişimcilik</a><a href="#medya">Medya</a><a href="#konusmalar" id="navk" hidden>Konuşmalar</a><a href="#yayinlar">Yayınlar</a><a href="#iletisim">İletişim</a></div></nav>
 
 <header class="hero">
   <div class="bg" data-img="Hilo Town and Mauna Kea.JPG"></div>
@@ -129,6 +129,11 @@ footer{padding:40px 0;text-align:center;color:var(--mute);font-size:14px;border-
   <p class="note">Video: One Man Wolf Pack, YouTube. Telif hakkı sahibine aittir. Görseller Wikimedia Commons'tan bağlantıyla yüklenir; yüklenmezse renkli yedek zemin görünür.</p>
 </div></section>
 
+<section id="konusmalar" hidden><div class="wrap">
+  <h2>Konuşmalar ve röportajlar</h2><p class="sub">TEDx ve diğer video kayıtları</p>
+  <div class="grid" id="vgrid"></div>
+</div></section>
+
 <section id="yayinlar"><div class="wrap">
   <h2>Seçme yayınlar</h2><p class="sub">Toplam 91 makale, bildiri ve gazete yazısı (1983 →)</p>
   <ol class="pubs">
@@ -153,6 +158,24 @@ footer{padding:40px 0;text-align:center;color:var(--mute);font-size:14px;border-
 
 <footer><div class="wrap">© 2026 Prof. Dr. Şevki Serkan Erdoğan</div></footer>
 
+<script>
+// YouTube bağlantılarını buraya yapıştırın (tam URL veya 11 karakterlik video kimliği).
+// Örnek: {t:"TEDx konuşması", u:"https://www.youtube.com/watch?v=XXXXXXXXXXX"}
+var VIDEOS=[];
+(function(){
+  if(!VIDEOS.length)return;
+  var g=document.getElementById('vgrid');
+  VIDEOS.forEach(function(v){
+    var m=String(v.u).match(/(?:v=|youtu\.be\/|embed\/)?([A-Za-z0-9_-]{11})(?:[?&]|$)/);
+    if(!m)return;
+    var d=document.createElement('div');
+    d.innerHTML='<div class="video"><iframe loading="lazy" allowfullscreen title="" src="https://www.youtube-nocookie.com/embed/'+m[1]+'"></iframe></div><p class="note"></p>';
+    d.querySelector('iframe').title=v.t;d.querySelector('.note').textContent=v.t;
+    g.appendChild(d);
+  });
+  document.getElementById('konusmalar').hidden=false;document.getElementById('navk').hidden=false;
+})();
+</script>
 <script>
 // Wikimedia Commons görselleri bağlantıyla yüklenir; hata olursa gradyan yedek kalır.
 document.querySelectorAll('[data-img]').forEach(function(el,i){
