@@ -29,7 +29,12 @@ h1{font-size:clamp(36px,6vw,64px);line-height:1.1;margin:.3em 0}
 .btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:28px}
 .btn{padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:600;font-size:15px;background:var(--ink);color:#FFFFFF;border:1px solid var(--ink)}
 .btn.o{background:transparent;color:var(--ink);border:1px solid var(--ink)}
-.hero .bg{max-width:1040px;margin:0 auto 56px;width:calc(100% - 32px);aspect-ratio:21/9;border-radius:10px;background-size:cover;background-position:center;background-color:var(--ph)}
+.mosaic{max-width:1040px;margin:0 auto 56px;width:calc(100% - 32px);display:grid;grid-template-columns:1.2fr 1fr;grid-template-rows:1fr 1fr;gap:10px;height:min(520px,60vw)}
+.mosaic img{width:100%;height:100%;object-fit:cover;border-radius:10px;display:block;background:var(--ph)}
+.mosaic .m1{grid-row:1/3;object-position:50% 25%}.mosaic .m2{object-position:60% 30%}.mosaic .m3{object-position:55% 25%}
+@media(max-width:640px){.mosaic{grid-template-columns:1fr 1fr;grid-template-rows:auto auto;height:auto}.mosaic .m1{grid-column:1/3;grid-row:auto;height:300px}.mosaic .m2,.mosaic .m3{height:130px}}
+figure img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;display:block;background:var(--ph)}
+figcaption a{color:var(--mute)}
 section{padding:64px 0;border-top:1px solid var(--line)}
 .hero+.wrap+section{border-top:0}
 h2{font-size:32px;margin:0 0 6px}h2+p.sub{color:var(--mute);margin:0 0 28px}
@@ -68,7 +73,11 @@ footer{padding:40px 0;text-align:center;color:var(--mute);font-size:14px;border-
     <p class="lead"><span lang="tr">Manchester'dan Singapur'a, Hawaii'den Kaş'a: bilgisayar mühendisliği eğitimine, araştırmaya ve sürdürülebilir girişimciliğe kırk yılı aşkın emek.</span><span lang="en">From Manchester to Singapore, from Hawaii to Kaş: over four decades devoted to computer engineering education, research and sustainable entrepreneurship.</span></p>
     <div class="btns"><a class="btn" href="#kariyer"><span lang="tr">Kariyer yolculuğu</span><span lang="en">Career journey</span></a><a class="btn o" href="#iletisim"><span lang="tr">İletişime geç</span><span lang="en">Get in touch</span></a></div>
   </div>
-  <div class="bg" data-img="Hilo Town and Mauna Kea.JPG" role="img" aria-label="Hilo and Mauna Kea"></div>
+  <div class="mosaic">
+    <img class="m1" src="img/sevki-uh-2007.jpg" alt="Prof. Dr. Şevki Serkan Erdoğan, Hawaii Üniversitesi, 2007" width="432" height="372">
+    <img class="m2" src="https://i.ytimg.com/vi/HyRBn-ybIxA/maxresdefault.jpg" alt="TEDxAlanya konuşması" loading="lazy">
+    <img class="m3" src="https://i.ytimg.com/vi/Nw8M-WbphGc/maxresdefault.jpg" alt="Club Barbarossa röportajı" loading="lazy">
+  </div>
 </header>
 
 <div class="wrap">
@@ -89,7 +98,7 @@ footer{padding:40px 0;text-align:center;color:var(--mute);font-size:14px;border-
 </div></section>
 
 <section id="kariyer"><div class="wrap">
-  <h2><span lang="tr">Akademik ve idari yolculuk</span><span lang="en">Academic and administrative journey</span></h2><p class="sub"><span lang="tr">Eğitim ve görevler</span><span lang="en">Education and positions</span></p>
+  <h2><span lang="tr">Akademik ve idari yolculuk</span><span lang="en">Academic and administrative journey</span></h2><p class="sub"><span lang="tr">Eğitim ve görevler.</span><span lang="en">Education and positions.</span> <a href="https://www.hawaii.edu/hpc/rotm/erdogan.html" target="_blank" rel="noopener"><span lang="tr">Doğrulanan kısım: Manchester, NTU, San Diego State, Southwest State, Angers (UH profili)</span><span lang="en">Verified: Manchester, NTU, San Diego State, Southwest State, Angers (UH profile)</span> ↗</a></p>
   <div class="tl">
     <div><em>2003 – 2018</em><b><span lang="tr">Profesör, Hawaii Üniversitesi (Hilo)</span><span lang="en">Professor, University of Hawaii (Hilo)</span></b><span class="d"><span lang="tr">Bölüm başkanlığı, Senato Başkanlığı, Rektör Seçim Kurulu, Bütçe, Müfredat ve Değerlendirme kurulları. 2010'da "Mükemmel Hizmet Ödülü".</span><span lang="en">Department chair, Senate chair, Chancellor Selection Committee, Budget, Curriculum and Evaluation committees. 2010 Excellence in Service Award.</span></span></div>
     <div><em>2002 – 2003</em><b><span lang="tr">Misafir Profesör, Southwest State Üniversitesi (Minnesota)</span><span lang="en">Visiting Professor, Southwest State University (Minnesota)</span></b><span class="d"><span lang="tr">Eyaletin geleceği çekirdek ekibi.</span><span lang="en">Member of the state's future core team.</span></span></div>
@@ -125,12 +134,11 @@ footer{padding:40px 0;text-align:center;color:var(--mute);font-size:14px;border-
 </div></section>
 
 <section id="medya"><div class="wrap">
-  <h2><span lang="tr">Medya</span><span lang="en">Media</span></h2><p class="sub"><span lang="tr">Çalıştığı ve yaşadığı yerlerden görüntüler</span><span lang="en">Scenes from the places he has worked and lived</span></p>
+  <h2><span lang="tr">Medya</span><span lang="en">Media</span></h2><p class="sub"><span lang="tr">Fotoğraflar, kaynaklarıyla</span><span lang="en">Photos, with their sources</span></p>
   <div class="grid">
-    <figure><div class="ph" data-img="Hilo Town and Mauna Kea.JPG"><i>Hilo &amp; Mauna Kea</i></div><figcaption><span lang="tr">Hawaii Üniversitesi, Hilo (2003–2018). Kaynak: Wikimedia Commons</span><span lang="en">University of Hawaii, Hilo (2003–2018). Source: Wikimedia Commons</span></figcaption></figure>
-    <figure><div class="ph" data-img="Rainbow falls with a blue cloudy sky.jpg"><i>Rainbow Falls</i></div><figcaption>Hilo, Hawaii. <span lang="tr">Kaynak</span><span lang="en">Source</span>: Wikimedia Commons</figcaption></figure>
-    <figure><div class="ph" data-img="NTU Administration Building.JPG"><i>NTU</i></div><figcaption><span lang="tr">Nanyang Teknoloji Üniversitesi, Singapur (1990–1999). Kaynak: Wikimedia Commons</span><span lang="en">Nanyang Technological University, Singapore (1990–1999). Source: Wikimedia Commons</span></figcaption></figure>
-    <figure><div class="ph" data-img="Nanyang Lake, Singapore, 2015-02-07.jpg"><i>Nanyang Lake</i></div><figcaption><span lang="tr">NTU kampüsü, Singapur. Kaynak: Wikimedia Commons</span><span lang="en">NTU campus, Singapore. Source: Wikimedia Commons</span></figcaption></figure>
+    <figure><img src="img/sevki-uh-2007.jpg" alt="Şevki Erdoğan, 2007" loading="lazy"><figcaption><span lang="tr">Hawaii Üniversitesi "Ayın Araştırmacısı", 2007.</span><span lang="en">University of Hawaii "Researcher of the Month", 2007.</span> <a href="https://www.hawaii.edu/hpc/rotm/erdogan.html" target="_blank" rel="noopener"><span lang="tr">Kaynak</span><span lang="en">Source</span> ↗</a></figcaption></figure>
+    <figure><img src="https://i.ytimg.com/vi/HyRBn-ybIxA/maxresdefault.jpg" alt="TEDxAlanya" loading="lazy"><figcaption>TEDxAlanya HGFL Youth. <a href="https://youtu.be/HyRBn-ybIxA" target="_blank" rel="noopener"><span lang="tr">Kaynak</span><span lang="en">Source</span> ↗</a></figcaption></figure>
+    <figure><img src="https://i.ytimg.com/vi/Nw8M-WbphGc/maxresdefault.jpg" alt="Club Barbarossa röportajı" loading="lazy"><figcaption><span lang="tr">Club Barbarossa Hotel röportajı.</span><span lang="en">Club Barbarossa Hotel interview.</span> <a href="https://youtu.be/Nw8M-WbphGc" target="_blank" rel="noopener"><span lang="tr">Kaynak</span><span lang="en">Source</span> ↗</a></figcaption></figure>
   </div>
 </div></section>
 
@@ -178,14 +186,6 @@ function setLang(l){document.documentElement.lang=l;try{localStorage.setItem('la
 (function(){var l;try{l=localStorage.getItem('lang')}catch(e){}
  if(!l)l=(navigator.language||'tr').toLowerCase().indexOf('tr')===0?'tr':'en';
  var q=location.search.match(/lang=(tr|en)/);if(q)l=q[1];setLang(l)})();
-document.querySelectorAll('[data-img]').forEach(function(el,i){
-  var f=el.getAttribute('data-img');
-  var url='https://commons.wikimedia.org/wiki/Special:FilePath/'+encodeURIComponent(f.replace(/ /g,'_'))+'?width=1200';
-  
-  var img=new Image();
-  img.onload=function(){el.style.backgroundImage='url("'+url+'")'};
-  img.src=url;
-});
 </script>
 </body>
 </html>
